@@ -1071,6 +1071,7 @@ class ShopInput extends Taker {
         this.shop.deconstruct()
     };
 }
+
 class ShopOutput extends Giver {
     constructor(shop) {
         super(shop.corner);
@@ -1159,29 +1160,7 @@ function rotateMatrix(matrix) { //rotates a matrix counter-clockwise
     return output;
 }
 
-let RECIPES = {
-    bread: {
-        input: [
-            ["berry", 1]
-        ],
-        output: ["bread", 1]
-    },
-    perfume: {
-        input: [
-            ["berry", 1],
-            ["wood", 1]
-        ],
-        output: ["perfume", 1]
-    },
-    steak: {
-        input: [
-            ["berry", 1],
-            ["wood", 2]
-        ],
-        output: ["steak", 1]
-    }
-}
-
+// this is the interface to get graphics for a resource, mostly. The name is used elsewhere.
 class Resource {
     constructor(name) {
         this.name = name;
