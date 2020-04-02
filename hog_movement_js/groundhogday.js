@@ -1187,20 +1187,11 @@ class Resource {
         this.name = name;
     }
     get graphic() {
-        switch (this.name) {
-            case "berry":
-                return document.getElementById("berry");
-            case "wood":
-                return document.getElementById("wood");
-            case "steak":
-                return document.getElementById("steak");
-            case "bread":
-                return document.getElementById("bread");
-            case "perfume":
-                return document.getElementById("perfume");
-            default:
-                return document.getElementById("undefined_item");
-        }
+		let graphic_id = "undefined_item";
+		if( ["berry","wood","steak","bread","perfume"].includes(this.name) ){
+			graphic_id = this.name;
+		}
+		return document.getElementById(graphic_id);
     }
     toString() {
         return this.name;
