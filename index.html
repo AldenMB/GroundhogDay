@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Demo Hog Movement</title>
+</head>
+
+<style type="text/css">
+td{
+  color:white;
+  background-color:black;
+  width:4em;
+  height:4em;
+  text-align:center;
+}
+.road{
+  background-color:darkred;
+}
+
+.looped{
+  color:lightgreen;
+}
+.stuck{
+  color:red;
+}
+</style>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
+
+<script type = "text/javascript" src="./groundhogday.js">
+</script>
+<script type = "text/javascript" src="./recipes.js">
+</script> 
+<!-- I wish there were a nice way to keep the recipes as a JSON file and import them, but I woud need a proper web server to do that. -->
+
+<body>
+ <div id="board_container">
+ </div>
+ <div id="step_count">
+ This day has gone on for 0 steps.
+ </div>
+ <div id="reset_button">
+    <button id="reset" 
+	onclick="
+		b.reset_day();
+		b.next_frame();
+	"> Reset </button>
+ </div>
+ <form id="tools">
+ Tools:
+ <input name="tool_radio" type="radio" value="rotate_house"> Rotate House </button>
+ <input name="tool_radio" type="radio" value="road_toggle" checked="checked"> Road Toggle </button>
+ <input name="tool_radio" type="radio" value="house_toggle"> House Toggle </button>
+ <input name="tool_radio" type="radio" value="tree_toggle"> Tree Toggle </button>
+ <input name="tool_radio" type="radio" value="castle_toggle"> Castle Toggle </button>
+ <input name="tool_radio" type="radio" value="berry_bush_toggle"> Berry Bush Toggle </button>
+ <input name="tool_radio" type="radio" value="shop_toggle"> Shop Toggle </button>
+ <input name="tool_radio" type="radio" value="shop_rotate"> Shop Rotate </button>
+ </form>
+ <form id="recipe_select">
+ Recipe input: 
+ <input name="recipe_radio" type="radio" value="bread" checked="checked">bread
+ <input name="recipe_radio" type="radio" value="perfume">perfume
+ <input name="recipe_radio" type="radio" value="steak">steak
+ </form>
+
+ <canvas id="myCanvas" width="600" height="400"
+   style="border:1px solid #000000;" tabindex='1'> 
+ </canvas> 
+ 
+ <p hidden> resources:
+ <img id="up_left_hog"    src=resources/groundhogs/up_left_hog.png>
+ <img id="up_right_hog"   src=resources/groundhogs/up_right_hog.png>
+ <img id="down_left_hog"  src=resources/groundhogs/down_left_hog.png>
+ <img id="down_right_hog" src=resources/groundhogs/down_right_hog.png>
+ <img id="grass" src=resources/grass.png>
+ <img id="road" src=resources/road.png>
+ <img id="hole_up_left"    src=resources/holes/hole_up_left.png>
+ <img id="hole_up_right"   src=resources/holes/hole_up_right.png>
+ <img id="hole_down_left"  src=resources/holes/hole_down_left.png>
+ <img id="hole_down_right" src=resources/holes/hole_down_right.png>
+ <img id="castle" src=resources/castle.png>
+ <img id="berry_bush_0" src=resources/berry_bush/berry_bush_0.png>
+ <img id="berry_bush_1" src=resources/berry_bush/berry_bush_1.png>
+ <img id="berry_bush_2" src=resources/berry_bush/berry_bush_2.png>
+ <img id="tree_0" src=resources/tree/tree_0.png>
+ <img id="tree_1" src=resources/tree/tree_1.png>
+ <img id="berry" src=resources/berry.png>
+ <img id="wood" src=resources/wood.png>
+ <img id="undefined_item" src=resources/undefined_item.png>
+ <img id="steak" src=resources/steak.png>
+ <img id="bread" src=resources/bread.png>
+ <img id="shop_ne" src=resources/shop/shop_ne.png>
+ <img id="shop_nw" src=resources/shop/shop_nw.png>
+ <img id="shop_se" src=resources/shop/shop_se.png>
+ <img id="shop_sw" src=resources/shop/shop_sw.png>
+ <img id="perfume" src=resources/perfume.png>
+ </p>
+
+</body>
+
+</html>
