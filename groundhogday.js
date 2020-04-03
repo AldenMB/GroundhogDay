@@ -1160,7 +1160,7 @@ function rotateMatrix(matrix) { //rotates a matrix counter-clockwise
     return output;
 }
 
-// this is the interface to get graphics for a resource, mostly. The name is used elsewhere.
+// this is the interface to get graphics for a resource, mostly. The name of the resource is used elsewhere.
 class Resource {
     constructor(name) {
         this.name = name;
@@ -1564,8 +1564,17 @@ class Game_window {
     }
 }
 
+var RECIPES = {}
+fetch('./recipes.json')
+	.then((response) => {
+	return response.json();
+	})
+	.then((data) => {
+	RECIPES = data;
+	});
+
 var b = null;
-$(document).ready(function() {
+$(window).on('load', function() {
     b = new Board(7, 6);
 
     b.tileAt(5, 1).interact_toggle(Castle);
