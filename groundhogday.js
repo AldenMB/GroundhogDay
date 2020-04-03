@@ -17,7 +17,7 @@ class Tile {
         this.x = x;
         this.y = y;
         this.floor = floor;
-        this.flans = [];
+        this.hogs = [];
         this.house = false;
         this.interactable = false;
     }
@@ -29,29 +29,29 @@ class Tile {
         if (this.house) {
             s.append(this.house.appearance);
         };
-        for (let flan of this.flans) {
-            s.append(flan.appearance);
+        for (let hog of this.hogs) {
+            s.append(hog.appearance);
         };
         return s;
     }
-    remove_flan(flan) {
-        var index = this.flans.indexOf(flan);
+    remove_hog(hog) {
+        var index = this.hogs.indexOf(hog);
         if (index > -1) {
-            this.flans.splice(index, 1);
+            this.hogs.splice(index, 1);
         };
     }
-    flan_pointing(direction) {
-        for (let flan of this.flans) {
-            if (flan.direction === direction) {
-                return flan;
+    hog_pointing(direction) {
+        for (let hog of this.hogs) {
+            if (hog.direction === direction) {
+                return hog;
             };
         };
         return false;
     }
-    flan_going(direction) {
-        for (let flan of this.flans) {
-            if (flan.going() === direction) {
-                return flan;
+    hog_going(direction) {
+        for (let hog of this.hogs) {
+            if (hog.going() === direction) {
+                return hog;
             };
         };
         return false;
@@ -162,12 +162,12 @@ class Tile {
     neighborsFromMatrix(matrix, me) { //me is the position [column, row] of this tile in the matrix
         return this.board.tilesFromMatrix(matrix, [this.x - me[0], this.y + me[1]]);
     }
-    hasFlanAdjacent(flan) {
-        let flanList = [];
+    hasHogAdjacent(hog) {
+        let hogList = [];
         for (let direction of ["N", "S", "E", "W"]) {
-            flanList = flanList.concat(this.to_my(direction).flans);
+            hogList = hogList.concat(this.to_my(direction).hogs);
         }
-        return flanList.includes(flan);
+        return hogList.includes(hog);
     }
 }
 
@@ -177,7 +177,7 @@ class Board {
         this.height = height;
         this.tiles = [...Array(this.width * this.height)]
             .map((spot, index) => new Tile(this, mod(index, this.width), Math.floor(index / this.width)));
-        this.is_changed = false; //this variable is used to un-loop and un-stuck all the flan at the appropriate time.
+        this.is_changed = false; //this variable is used to un-loop and un-stuck all the hog at the appropriate time.
         this.number_of_steps = 0; //this stores the value for the day-length dispay, and is otherwise unused.
         this.window = new Game_window(this);
         this.frame = 0;
@@ -188,10 +188,10 @@ class Board {
     get houses() {
         return this.tiles.map(tile => tile.house).filter(house => house);
     }
-    get flans() {
+    get hogs() {
         let array = [];
         for (let tile of this.tiles) {
-            array.push(...tile.flans);
+            array.push(...tile.hogs);
         }
         return array;
     }
@@ -210,20 +210,20 @@ class Board {
         return this.tiles[mod(x, this.width) + this.width * mod(y, this.height)];
     }
     step() {
-        for (let flan of this.flans) {
-            flan.has_stepped = false;
-            flan.hopped_from = false;
-            flan.previous_stack_position = flan.stack_position;
+        for (let hog of this.hogs) {
+            hog.has_stepped = false;
+            hog.hopped_from = false;
+            hog.previous_stack_position = hog.stack_position;
         };
         if (this.is_changed) {
-            for (let flan of this.flans) {
-                flan.looped = false;
-                flan.stuck = false;
+            for (let hog of this.hogs) {
+                hog.looped = false;
+                hog.stuck = false;
             };
             this.is_changed = false;
         };
-        for (let flan of this.flans) {
-            flan.step();
+        for (let hog of this.hogs) {
+            hog.step();
         };
 
         let matchmaker = new Matchmaker(this)
@@ -238,9 +238,9 @@ class Board {
             shop.craft();
         }
     }
-    recall_flan() {
+    recall_hog() {
         for (let house of this.houses) {
-            house.recall_flan();
+            house.recall_hog();
         };
     }
     replenish_givers() {
@@ -252,7 +252,7 @@ class Board {
     }
     reset_day() {
         this.number_of_steps = 0;
-        this.recall_flan();
+        this.recall_hog();
         this.replenish_givers();
     }
     render() {
@@ -325,25 +325,30 @@ class Board {
     }
 }
 
-class Flan {
+class Hog {
     constructor(tile, direction) {
         //variables
         this.tile = tile;
         this.direction = direction;
+		//used for path finding
         this.has_stepped = false;
         this.is_waiting = false;
         this.looped = false;
         this.stuck = false;
+		//optional, for to make it easier to follow in text mode.
         this.decorator = '';
+		//for drawing
         this.hopped_from = false;
         this.previous_stack_position = 0;
+		//for interactions
         this.interact_preferences = [];
         this.holding = false;
+		//for drawing
         this.previous_holding = false;
         this.gave_to = false;
         this.took_from = false;
         //change other variables upon creation
-        tile.flans.push(this);
+        tile.hogs.push(this);
     }
     reset_interact_preferences() {
         let neighbors = this.neighbor_tiles();
@@ -354,14 +359,14 @@ class Flan {
         ]
     }
     get stack_position() {
-        return this.tile.flans.indexOf(this);
+        return this.tile.hogs.indexOf(this);
     }
     deconstruct() {
-        this.tile.remove_flan(this);
+        this.tile.remove_hog(this);
     }
     get appearance() {
         var s = $("<span>");
-        s.addClass("flan");
+        s.addClass("hog");
         if (this.looped) {
             s.addClass("looped");
         }
@@ -376,7 +381,7 @@ class Flan {
     move(move_direction = this.going()) {
         if (move_direction === '') return;
         this.hopped_from = this.tile;
-        this.tile.remove_flan(this);
+        this.tile.remove_hog(this);
         switch (move_direction) {
             case "N":
                 this.tile = this.tile.north;
@@ -391,13 +396,13 @@ class Flan {
                 this.tile = this.tile.south;
         }
         this.direction = move_direction;
-        this.tile.flans.push(this);
+        this.tile.hogs.push(this);
     };
     move_to(tile = this.tile, direction = this.direction) {
-        this.tile.remove_flan(this);
+        this.tile.remove_hog(this);
         this.tile = tile;
         this.direction = direction;
-        this.tile.flans.push(this);
+        this.tile.hogs.push(this);
     }
     neighbor_tiles() {
         var obj = {
@@ -443,33 +448,33 @@ class Flan {
         return '';
     }
     following() {
-        var temp_flan = new Flan(this.tile, this.direction);
-        temp_flan.move();
-        var test_tile = temp_flan.tile;
-        var test_direction = temp_flan.going();
-        temp_flan.deconstruct();
-        return test_tile.flan_going(test_direction);
+        var temp_hog = new Hog(this.tile, this.direction);
+        temp_hog.move();
+        var test_tile = temp_hog.tile;
+        var test_direction = temp_hog.going();
+        temp_hog.deconstruct();
+        return test_tile.hog_going(test_direction);
     }
     going_to_t() {
-        var temp_flan = new Flan(this.tile, this.direction);
-        temp_flan.move();
-        if (temp_flan.tile === this.tile) {
-            temp_flan.deconstruct();
+        var temp_hog = new Hog(this.tile, this.direction);
+        temp_hog.move();
+        if (temp_hog.tile === this.tile) {
+            temp_hog.deconstruct();
             return false;
         }
-        var temp_flan_neighbors = temp_flan.neighbor_tiles();
-        var condition = (temp_flan_neighbors.front.floor === '' &&
-            temp_flan_neighbors.right.floor === 'r' &&
-            temp_flan_neighbors.left.floor === 'r');
-        temp_flan.deconstruct();
+        var temp_hog_neighbors = temp_hog.neighbor_tiles();
+        var condition = (temp_hog_neighbors.front.floor === '' &&
+            temp_hog_neighbors.right.floor === 'r' &&
+            temp_hog_neighbors.left.floor === 'r');
+        temp_hog.deconstruct();
         return condition;
     }
-    flan_competing_for_t() {
+    hog_competing_for_t() {
         if (!this.going_to_t()) return false;
-        var temp_flan = new Flan(this.tile, this.direction);
-        temp_flan.move();
-        var ret_val = temp_flan.neighbor_tiles().left.flan_going(temp_flan.right);
-        temp_flan.deconstruct();
+        var temp_hog = new Hog(this.tile, this.direction);
+        temp_hog.move();
+        var ret_val = temp_hog.neighbor_tiles().left.hog_going(temp_hog.right);
+        temp_hog.deconstruct();
         if (ret_val.has_stepped) {
             return false;
         }
@@ -479,8 +484,8 @@ class Flan {
         if (this.has_stepped || this.stuck) {
             return
         };
-        let next_flan = this.following();
-        if (next_flan === this) {
+        let next_hog = this.following();
+        if (next_hog === this) {
             this.stuck = true;
             this.has_stepped = true;
             return;
@@ -488,42 +493,42 @@ class Flan {
         if (this.looped) {
             this.has_stepped = true;
             this.move();
-            if (next_flan) {
-                next_flan.step();
+            if (next_hog) {
+                next_hog.step();
             }
             return;
         }
-        if (next_flan) {
-            if (next_flan.looped || next_flan.stuck) {
+        if (next_hog) {
+            if (next_hog.looped || next_hog.stuck) {
                 this.stuck = true;
                 this.has_stepped = true;
                 return;
             }
-            if (next_flan.is_waiting) { // We found a new loop. Inform the others, then advance the whole loop.
+            if (next_hog.is_waiting) { // We found a new loop. Inform the others, then advance the whole loop.
                 this.looped = true;
-                let f = next_flan;
+                let f = next_hog;
                 while (f !== this) {
                     f.looped = true;
                     f = f.following();
                 }
-                //next_flan.looped = true;
+                //next_hog.looped = true;
                 this.move();
                 this.has_stepped = true;
-                next_flan.step();
+                next_hog.step();
                 return;
             }
             this.is_waiting = true;
-            next_flan.step(); //let the next flan get out of the way.
+            next_hog.step(); //let the next hog get out of the way.
             this.is_waiting = false;
-            if (this.following()) { //the flan we are following could not move, or another flan took its place. Stop.
+            if (this.following()) { //the hog we are following could not move, or another hog took its place. Stop.
                 if (this.following.looped || this.following.stuck) {
                     this.stuck = true;
                 }
                 this.has_stepped = true;
                 return;
             }
-            if (this.flan_competing_for_t()) { //let another flan into the procession. Stop.
-                this.flan_competing_for_t().step();
+            if (this.hog_competing_for_t()) { //let another hog into the procession. Stop.
+                this.hog_competing_for_t().step();
                 this.has_stepped = true;
                 return;
             }
@@ -533,8 +538,8 @@ class Flan {
             return;
         }
         //we are not following anyone, i.e. our target space is open.
-        if (this.flan_competing_for_t()) { //let another flan into the procession. Stop.
-            this.flan_competing_for_t().step();
+        if (this.hog_competing_for_t()) { //let another hog into the procession. Stop.
+            this.hog_competing_for_t().step();
             this.has_stepped = true;
             return;
         }
@@ -578,23 +583,23 @@ class House {
         this.tile = tile;
         this.direction = direction;
         this.decorator = decorator;
-        this.flan = new Flan(this.tile, direction);
+        this.hog = new Hog(this.tile, direction);
         //change other objects
-        this.flan.decorator = decorator;
+        this.hog.decorator = decorator;
         this.tile.house = this;
     }
     get appearance() {
         return "H" + this.decorator + ARROWS[this.direction];
     }
-    recall_flan() {
-        this.flan.move_to(this.tile, this.direction);
-        this.flan.holding = false;
-        this.flan.gave_to = false;
-        this.flan.took_from = false;
+    recall_hog() {
+        this.hog.move_to(this.tile, this.direction);
+        this.hog.holding = false;
+        this.hog.gave_to = false;
+        this.hog.took_from = false;
         this.tile.board.is_changed = true;
     }
     deconstruct() {
-        this.flan.deconstruct();
+        this.hog.deconstruct();
         this.tile.house = false;
     }
     rotate(times = 1) {
@@ -606,7 +611,7 @@ class House {
                 "W": "N"
             } [this.direction];
         }
-        this.recall_flan();
+        this.recall_hog();
         return this;
     }
     graphic() {
@@ -625,9 +630,9 @@ class House {
 
 class InteractionQueue {
     constructor() {
-        this.pairs = []; //[[flan,interactable],...]
+        this.pairs = []; //[[hog,interactable],...]
     }
-    flans_of(interactable) {
+    hogs_of(interactable) {
         let pair_list = this.pairs.filter(pair => pair[1] === interactable);
         let list = [];
         for (let pair of pair_list) {
@@ -635,11 +640,11 @@ class InteractionQueue {
         }
         return list;
     }
-    add_pair(flan, interactable) {
-        this.pairs.push([flan, interactable]);
+    add_pair(hog, interactable) {
+        this.pairs.push([hog, interactable]);
     }
-    remove_pair(flan, interactable) {
-        this.pairs.splice(this.pairs.indexOf([flan, interactable]), 1)
+    remove_pair(hog, interactable) {
+        this.pairs.splice(this.pairs.indexOf([hog, interactable]), 1)
     }
     resolve() {
         for (let pair of this.pairs) {
@@ -651,11 +656,11 @@ class InteractionQueue {
 class Matchmaker {
     constructor(board) {
         this.board = board;
-        for (let flan of this.board.flans) {
-            flan.previous_holding = flan.holding;
-            flan.gave_to = false;
-            flan.took_from = false;
-            flan.reset_interact_preferences();
+        for (let hog of this.board.hogs) {
+            hog.previous_holding = hog.holding;
+            hog.gave_to = false;
+            hog.took_from = false;
+            hog.reset_interact_preferences();
         }
         for (let tile of this.board.tiles) {
             if (tile.interactable instanceof Giver) {
@@ -666,21 +671,21 @@ class Matchmaker {
             }
         }
     }
-    consult_next(flans, type, queue) { // don't call me when flans.length = 0
-        let flan = flans.shift();
-        if (flan.interact_preferences.length === 0) return;
-        let target = flan.interact_preferences.shift();
+    consult_next(hogs, type, queue) { // don't call me when hogs.length = 0
+        let hog = hogs.shift();
+        if (hog.interact_preferences.length === 0) return;
+        let target = hog.interact_preferences.shift();
         if (!(target instanceof type)) {
-            flans.push(flan);
+            hogs.push(hog);
             return;
         }
-        let preferred = target.prefers(flan, queue);
+        let preferred = target.prefers(hog, queue);
         if (!preferred) {
-            flans.push(flan);
+            hogs.push(hog);
         } else {
-            queue.add_pair(flan, target);
-            if (preferred instanceof Flan) {
-                flans.push(preferred);
+            queue.add_pair(hog, target);
+            if (preferred instanceof Hog) {
+                hogs.push(preferred);
                 queue.remove_pair(preferred, target);
             }
         }
@@ -690,19 +695,19 @@ class Matchmaker {
         let holderQueue = new InteractionQueue(),
             seekerQueue = new InteractionQueue();
 
-        let activeFlans = this.board.flans.filter(flan => flan.hopped_from);
+        let activeHogs = this.board.hogs.filter(hog => hog.hopped_from);
 
-        let holders = activeFlans.filter(flan => flan.holding);
+        let holders = activeHogs.filter(hog => hog.holding);
         while (holders.length > 0) {
             this.consult_next(holders, Taker, holderQueue);
         }
         holderQueue.resolve();
 
-        for (let flan of activeFlans) {
-            flan.reset_interact_preferences();
+        for (let hog of activeHogs) {
+            hog.reset_interact_preferences();
         }
 
-        let seekers = activeFlans.filter(flan => !flan.holding);
+        let seekers = activeHogs.filter(hog => !hog.holding);
         while (seekers.length > 0) {
             this.consult_next(seekers, Giver, seekerQueue);
         }
@@ -727,15 +732,15 @@ class Interactable { //this should only be created as a Giver or a Taker.
     deconstruct() {
         this.tiles.forEach(tile => tile.interactable = false);
     }
-    prefers(flan, queue) {
-        let my_flans = queue.flans_of(this).filter(f => f.holding === flan.holding);
-        if (my_flans.length < this.max_interactions(flan.holding.name)) return true; //indicates that there was no competition
-        for (let competing_flan of my_flans) {
-            if (this.tile_preferences.indexOf(flan.tile) < this.tile_preferences.indexOf(competing_flan.tile)) {
-                return competing_flan;
+    prefers(hog, queue) {
+        let my_hogs = queue.hogs_of(this).filter(f => f.holding === hog.holding);
+        if (my_hogs.length < this.max_interactions(hog.holding.name)) return true; //indicates that there was no competition
+        for (let competing_hog of my_hogs) {
+            if (this.tile_preferences.indexOf(hog.tile) < this.tile_preferences.indexOf(competing_hog.tile)) {
+                return competing_hog;
             }
         }
-        return false; //indicates that given flan is not preferred
+        return false; //indicates that given hog is not preferred
     }
     spriteData() {
         return [];
@@ -748,13 +753,13 @@ class Taker extends Interactable {
         this.holding = [];
         this.previous_holding = [];
     }
-    interact_with(flan) {
-        this.take_from(flan);
+    interact_with(hog) {
+        this.take_from(hog);
     }
-    take_from(flan) {
-        this.holding.push(flan.holding);
-        flan.holding = false;
-        flan.gave_to = this.tiles.find(tile => tile.hasFlanAdjacent(flan));
+    take_from(hog) {
+        this.holding.push(hog.holding);
+        hog.holding = false;
+        hog.gave_to = this.tiles.find(tile => tile.hasHogAdjacent(hog));
     }
     max_interactions(resource_type = false) {
         return 100; // a very large number, to simulate infinity.
@@ -776,12 +781,12 @@ class Giver extends Interactable { //make sure to define baseResourceCount and r
         this.resource_count = this.baseResourceCount(); // new variables are defined here.
         this.previous_resource_count = this.baseResourceCount();
     }
-    interact_with(flan) {
-        this.give_to(flan);
+    interact_with(hog) {
+        this.give_to(hog);
     }
-    give_to(flan, tile) {
-        flan.holding = this.resourceType();
-        flan.took_from = this.tiles.find(tile => tile.hasFlanAdjacent(flan));
+    give_to(hog, tile) {
+        hog.holding = this.resourceType();
+        hog.took_from = this.tiles.find(tile => tile.hasHogAdjacent(hog));
         this.resource_count--;
     }
     max_interactions(resource_type = false) {
@@ -1335,7 +1340,7 @@ class Game_window {
     clear() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
-    draw_flan_at(flan, x, y, fraction = 1) {
+    draw_hog_at(hog, x, y, fraction = 1) {
         var stack_separation = 10;
         var ctx = this.context;
         ctx.save();
@@ -1344,14 +1349,14 @@ class Game_window {
         var new_y = y;
         var new_coords = {
             x: this.skewed_position_x(new_x, new_y),
-            y: this.skewed_position_y(new_x, new_y) - (stack_separation * flan.stack_position)
+            y: this.skewed_position_y(new_x, new_y) - (stack_separation * hog.stack_position)
         };
-        if (!flan.hopped_from || fraction >= 1) {
+        if (!hog.hopped_from || fraction >= 1) {
             var current_coords = new_coords;
         } else {
             var old_x = x;
             var old_y = y;
-            switch (flan.direction) {
+            switch (hog.direction) {
                 case "N":
                     old_y -= 1;
                     break;
@@ -1367,7 +1372,7 @@ class Game_window {
             }
             var old_coords = {
                 x: this.skewed_position_x(old_x, old_y),
-                y: this.skewed_position_y(old_x, old_y) - (stack_separation * flan.previous_stack_position)
+                y: this.skewed_position_y(old_x, old_y) - (stack_separation * hog.previous_stack_position)
             };
             var current_coords = this.hop_path(old_coords, new_coords, fraction);
         }
@@ -1375,16 +1380,16 @@ class Game_window {
         ctx.translate(current_coords.x, current_coords.y);
 
         //draw self
-        this.drawHere(flan, ctx);
+        this.drawHere(hog, ctx);
 
         //draw any items we are moving
-        if (fraction <= 1 && flan.previous_holding) {
-            this.drawHere(flan.previous_holding, ctx);
+        if (fraction <= 1 && hog.previous_holding) {
+            this.drawHere(hog.previous_holding, ctx);
         }
-        if (2 > fraction && fraction > 1 && flan.holding && !flan.gave_to && !flan.took_from) {
-            this.drawHere(flan.holding, ctx);
+        if (2 > fraction && fraction > 1 && hog.holding && !hog.gave_to && !hog.took_from) {
+            this.drawHere(hog.holding, ctx);
         }
-        if (2 > fraction && fraction > 1 && flan.gave_to) {
+        if (2 > fraction && fraction > 1 && hog.gave_to) {
             let from = {
                 x: 0,
                 y: 0
@@ -1393,7 +1398,7 @@ class Game_window {
                 x: from.x,
                 y: from.y
             }
-            switch (flan.direction_of(flan.gave_to)) {
+            switch (hog.direction_of(hog.gave_to)) {
                 case 'N':
                     to.x += this.tile_size * Math.sqrt(0.5);
                     to.y -= this.tile_size * Math.sqrt(0.125);
@@ -1414,9 +1419,9 @@ class Game_window {
                     console.log('What? Error!');
             }
             let item_coords = this.hop_path(from, to, fraction - 1);
-            ctx.drawImage(flan.previous_holding.graphic, -this.tile_size * 0.4 + item_coords.x, -this.tile_size * 0.2 + item_coords.y, this.tile_size * 0.8, this.tile_size * 0.8);
+            ctx.drawImage(hog.previous_holding.graphic, -this.tile_size * 0.4 + item_coords.x, -this.tile_size * 0.2 + item_coords.y, this.tile_size * 0.8, this.tile_size * 0.8);
         }
-        if (2 > fraction && fraction > 1 && flan.took_from) {
+        if (2 > fraction && fraction > 1 && hog.took_from) {
             let from = {
                 x: 0,
                 y: 0
@@ -1425,7 +1430,7 @@ class Game_window {
                 x: from.x,
                 y: from.y
             }
-            switch (flan.direction_of(flan.took_from)) {
+            switch (hog.direction_of(hog.took_from)) {
                 case 'N':
                     to.x += this.tile_size * Math.sqrt(0.5);
                     to.y -= this.tile_size * Math.sqrt(0.125);
@@ -1446,21 +1451,21 @@ class Game_window {
                     console.log('What? Error!')
             }
             let item_coords = this.hop_path(to, from, fraction - 1);
-            ctx.drawImage(flan.holding.graphic, -this.tile_size * 0.4 + item_coords.x, -this.tile_size * 0.2 + item_coords.y, this.tile_size * 0.8, this.tile_size * 0.8);
+            ctx.drawImage(hog.holding.graphic, -this.tile_size * 0.4 + item_coords.x, -this.tile_size * 0.2 + item_coords.y, this.tile_size * 0.8, this.tile_size * 0.8);
         }
-        if (fraction >= 2 && flan.holding) {
-            this.drawHere(flan.holding, ctx);
+        if (fraction >= 2 && hog.holding) {
+            this.drawHere(hog.holding, ctx);
         }
 
         ctx.restore();
     }
-    drawHere(item, context) { //called by draw_flan_at
+    drawHere(item, context) { //called by draw_hog_at
         context.drawImage(item.graphic, -this.tile_size * 0.4, -this.tile_size * 0.2, this.tile_size * 0.8, this.tile_size * 0.8);
     }
-    draw_flans_at(x, y, fraction = 1) {
+    draw_hogs_at(x, y, fraction = 1) {
         var tile = this.board.tileAt(x, y);
-        for (let flan of tile.flans) {
-            this.draw_flan_at(flan, x, y, fraction);
+        for (let hog of tile.hogs) {
+            this.draw_hog_at(hog, x, y, fraction);
         }
     }
     draw_house_at(x, y) {
@@ -1559,7 +1564,7 @@ class Game_window {
         this.do_everywhere_visible(this.draw_road_at);
         this.do_everywhere_visible(this.draw_house_at);
         this.do_everywhere_visible(this.draw_interactable_at, fraction * 3);
-        this.do_everywhere_visible(this.draw_flans_at, fraction * 3);
+        this.do_everywhere_visible(this.draw_hogs_at, fraction * 3);
         this.do_everywhere_visible(this.draw_shop_inventory_at, fraction * 3);
     }
 }
