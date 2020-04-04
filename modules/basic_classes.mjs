@@ -1,6 +1,7 @@
 import {GameWindow} from './graphics.mjs';
-import {Matchmaker, Castle, Berry_Bush, Tree, Shop, ShopInput, ShopOutput} from './hog_interactions.mjs';
+import {Matchmaker, Castle, Berry_Bush, Tree, Shop, ShopInput, ShopOutput, Giver} from './hog_interactions.mjs';
 import {mod, ARROWS} from './utilities.mjs';
+import {recipes} from './load_data.mjs';
 
 class Tile {
     constructor(board, x, y, floor = '') {
@@ -101,7 +102,7 @@ class Tile {
                 this.interact_toggle(Berry_Bush);
                 break;
             case "shop_toggle":
-                this.shop_toggle(RECIPES[document.getElementById("recipe_select").elements.recipe_radio.value]);
+                this.shop_toggle(recipes[document.getElementById("recipe_select").elements.recipe_radio.value]);
                 break;
             case "shop_rotate":
                 if (this.interactable instanceof ShopInput || this.interactable instanceof ShopOutput) this.interactable.shop.rotate();
@@ -172,6 +173,12 @@ class Board {
         this.number_of_steps = 0; //this stores the value for the day-length dispay, and is otherwise unused.
         this.window = new GameWindow(this);
         this.frame = 0;
+		
+		let myboard = this;
+		document.getElementById('reset').onclick = function(){			
+			myboard.reset_day();
+			myboard.next_frame();
+		}			
     }
     get selected_tool() {
         return document.getElementById("tools").elements.tool_radio.value;

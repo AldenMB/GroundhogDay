@@ -540,4 +540,4 @@ class ShopOutput extends Giver {
     };
 }
 
-export {Matchmaker, Castle, Berry_Bush, Tree, Shop, ShopInput, ShopOutput};
+export {Matchmaker, Castle, Berry_Bush, Tree, Shop, ShopInput, ShopOutput, Giver};
