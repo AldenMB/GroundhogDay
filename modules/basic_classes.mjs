@@ -173,13 +173,7 @@ class Board {
         this.number_of_steps = 0; //this stores the value for the day-length dispay, and is otherwise unused.
         this.window = new GameWindow(this);
 		this.steptime_millis = Date.now();
-		
-		
-		//some time when I have more patience I will work out something better than this monstrosity:
-		let myboard = this;
-		document.getElementById('reset').onclick = function(){			
-			myboard.reset_day();
-		}			
+		document.getElementById('reset').onclick = this.reset_day.bind(this);
     }
     get selected_tool() {
         return document.getElementById("tools").elements.tool_radio.value;
