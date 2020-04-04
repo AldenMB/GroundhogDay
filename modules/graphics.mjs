@@ -326,32 +326,29 @@ class GameWindow {
         ctx.save();
         ctx.translate(shop.center_offset[0] * this.tileWidth, shop.center_offset[1] * this.tileHeight);
 
-        let outlist = shop.output.pic_list(fraction < 2);
+        let outlist = shop.output.pic_list(fraction < 1);
         let inlist = shop.input.pic_list(fraction < 2);
-
+		
+		function draw_list(list){
+			for (let pair of list) {
+				if (pair[1]) {
+					ctx.globalAlpha = 1;
+				} else {
+					ctx.globalAlpha = 0.5;
+				}
+				this.drawResourceAt(pair[0], x, y);
+				ctx.translate(horizontal_sep, 0);
+			}
+		}
+		draw_list = draw_list.bind(this);
+		
         ctx.save();
         ctx.translate(-horizontal_sep * (outlist.length - 1) / 2, -vertical_sep / 2);
-        for (let pair of outlist) {
-            if (pair[1]) {
-                ctx.globalAlpha = 1;
-            } else {
-                ctx.globalAlpha = 0.5;
-            }
-            this.drawResourceAt(pair[0], x, y);
-            ctx.translate(horizontal_sep, 0);
-        }
+		draw_list(outlist);
         ctx.restore();
+		
         ctx.translate(-horizontal_sep * (inlist.length - 1) / 2, vertical_sep / 2);
-        for (let pair of inlist) {
-            if (pair[1]) {
-                ctx.globalAlpha = 1;
-            } else {
-                ctx.globalAlpha = 0.5;
-            }
-            this.drawResourceAt(pair[0], x, y);
-            ctx.translate(horizontal_sep, 0);
-        }
-
+		draw_list(inlist);
         ctx.restore();
     }
     hop_path(start, end, fraction) { //feed this objects with x and y

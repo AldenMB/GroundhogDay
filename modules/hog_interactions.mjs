@@ -54,7 +54,7 @@ class Matchmaker {
                 tile.interactable.previous_resource_count = tile.interactable.resource_count;
             }
             if (tile.interactable instanceof Taker) {
-                tile.interactable.previous_holding = tile.interactable.holding;
+                tile.interactable.previous_holding = tile.interactable.holding.slice();
             }
         }
     }
@@ -446,7 +446,9 @@ class ShopInput extends Taker {
     }
     numberHeld(resource_type, previous = false) {
         let holdlist = this.holding;
-        if (previous) holdlist = this.previous_holding;
+        if (previous) {
+			holdlist = this.previous_holding;
+		}
         return holdlist.filter(ing => ing.name === resource_type).length;
     }
     craft() {
