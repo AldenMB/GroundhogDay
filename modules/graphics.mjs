@@ -1,5 +1,6 @@
 import {ShopOutput} from './hog_interactions.mjs';
 import {mod} from './utilities.mjs';
+//import images from './load_data.mjs';
 
 class GameWindow {
     constructor(board) {
@@ -125,7 +126,8 @@ class GameWindow {
             this.tile_size * 0.8);
     }
     draw_floor_at(x, y) {
-        this.drawAt(document.getElementById("grass"), x, y);
+        //this.drawAt(images['grass'], x, y);
+		this.drawAt(document.getElementById("grass"), x, y);
     }
     draw_road_at(x, y) {
         if (this.board.tileAt(x, y).floor === '') return;

@@ -5,7 +5,7 @@ import {Castle, Berry_Bush, Tree} from './modules/hog_interactions.mjs';
 import {load_data, recipes} from './modules/load_data.mjs';
 
 load_data().then(function(){
-	$(window).on('load', function() {
+	$(document).ready( function() {
 		let b = new Board(7, 6);
 
 		b.tileAt(5, 1).interact_toggle(Castle);
