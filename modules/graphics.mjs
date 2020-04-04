@@ -33,8 +33,8 @@ class GameWindow {
         return this.tile_size * Math.SQRT1_2;
     }
     my_key_down(event) {
-        var key = event.key;
-        var stepsize = 3;
+        let key = event.key;
+        let stepsize = 3;
         switch (key) {
             case 'w':
             case 'W':
@@ -71,7 +71,7 @@ class GameWindow {
         }
     }
     my_key_up(event) {
-        var key = event.key;
+        let key = event.key;
         switch (key) {
             case 'w':
             case 'W':
@@ -104,7 +104,7 @@ class GameWindow {
         this.shift.y += this.shift_speed.y;
     }
     my_click(event) {
-        var tile = this.tileAtClick(event.offsetX, event.offsetY);
+        let tile = this.tileAtClick(event.offsetX, event.offsetY);
         tile.on_click();
     }
     drawAt(graphic, x, y, spriteData = []) { //spriteData=[start_x,start_y,sprite_width,sprite_height]
@@ -139,20 +139,20 @@ class GameWindow {
         return (this.shift.y) + ((this.tile_size * Math.sqrt(0.5) * 0.5) * (x - y + this.board.height - 1));
     }
     skewed_position_inverse(x, y) {
-        var horizontal_half = this.tile_size * Math.sqrt(0.5);
-        var vertical_half = horizontal_half * 0.5;
-        var newx = x - (this.shift.x + horizontal_half * (1 - this.board.height));
-        var newy = y - (this.shift.y + vertical_half * (this.board.height - 1));
+        let horizontal_half = this.tile_size * Math.sqrt(0.5);
+        let vertical_half = horizontal_half * 0.5;
+        let newx = x - (this.shift.x + horizontal_half * (1 - this.board.height));
+        let newy = y - (this.shift.y + vertical_half * (this.board.height - 1));
         newx /= horizontal_half;
         newy /= vertical_half;
-        var obj = {
+        let obj = {
             x: (newx + newy) / 2,
             y: (newx - newy) / 2 + 1
         }; // I don't know why this 1 belongs here.
         return obj;
     }
     tileAtClick(x, y) { //feed me mouse coordinates
-        var reduced_coords = this.skewed_position_inverse(x, y);
+        let reduced_coords = this.skewed_position_inverse(x, y);
         reduced_coords.x = Math.floor(reduced_coords.x);
         reduced_coords.y = Math.floor(reduced_coords.y);
         return this.board.tileAt(reduced_coords.x, reduced_coords.y);
@@ -161,21 +161,20 @@ class GameWindow {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
     draw_hog_at(hog, x, y, fraction = 1) {
-        var stack_separation = 10;
-        var ctx = this.context;
+        let stack_separation = 10;
+        let ctx = this.context;
         ctx.save();
 
-        var new_x = x;
-        var new_y = y;
-        var new_coords = {
+        let new_x = x;
+        let new_y = y;
+        let new_coords = {
             x: this.skewed_position_x(new_x, new_y),
             y: this.skewed_position_y(new_x, new_y) - (stack_separation * hog.stack_position)
         };
-        if (!hog.hopped_from || fraction >= 1) {
-            var current_coords = new_coords;
-        } else {
-            var old_x = x;
-            var old_y = y;
+		let current_coords = new_coords;
+		if (hog.hopped_from && fraction < 1){
+            let old_x = x;
+            let old_y = y;
             switch (hog.direction) {
                 case "N":
                     old_y -= 1;
@@ -190,11 +189,11 @@ class GameWindow {
                     old_x += 1;
                     break;
             }
-            var old_coords = {
+            let old_coords = {
                 x: this.skewed_position_x(old_x, old_y),
                 y: this.skewed_position_y(old_x, old_y) - (stack_separation * hog.previous_stack_position)
             };
-            var current_coords = this.hop_path(old_coords, new_coords, fraction);
+            current_coords = this.hop_path(old_coords, new_coords, fraction);
         }
 
         ctx.translate(current_coords.x, current_coords.y);
@@ -283,13 +282,13 @@ class GameWindow {
         context.drawImage(item.graphic, -this.tile_size * 0.4, -this.tile_size * 0.2, this.tile_size * 0.8, this.tile_size * 0.8);
     }
     draw_hogs_at(x, y, fraction = 1) {
-        var tile = this.board.tileAt(x, y);
+        let tile = this.board.tileAt(x, y);
         for (let hog of tile.hogs) {
             this.draw_hog_at(hog, x, y, fraction);
         }
     }
     draw_house_at(x, y) {
-        var house = this.board.tileAt(x, y).house;
+        let house = this.board.tileAt(x, y).house;
         if (!house) return;
 
         this.drawAt(house.graphic(), x, y);
@@ -356,24 +355,24 @@ class GameWindow {
         ctx.restore();
     }
     hop_path(start, end, fraction) { //feed this objects with x and y
-        var jumpheight = 60;
-        var obj = {
+        let jumpheight = 60;
+        let obj = {
             x: start.x * (1 - fraction) + end.x * fraction,
             y: start.y * (1 - fraction) + end.y * fraction - jumpheight * fraction * (1 - fraction)
         }
         return obj;
     }
     do_everywhere_visible(myfun, fraction = 1) {
-        var first_coords = this.skewed_position_inverse(0, 0);
+        let first_coords = this.skewed_position_inverse(0, 0);
         first_coords.x = Math.floor(first_coords.x);
         first_coords.y = Math.floor(first_coords.y);
-        var row_length = 2 + Math.floor(this.canvas.width / (this.tile_size * Math.sqrt(2)));
-        var num_rows = 2 + Math.floor(this.canvas.height / (this.tile_size * Math.sqrt(0.5)));
-        for (var row = 0; row < num_rows; row++) {
-            for (var column = -1; column < row_length; column++) {
+        let row_length = 2 + Math.floor(this.canvas.width / (this.tile_size * Math.sqrt(2)));
+        let num_rows = 2 + Math.floor(this.canvas.height / (this.tile_size * Math.sqrt(0.5)));
+        for (let row = 0; row < num_rows; row++) {
+            for (let column = -1; column < row_length; column++) {
                 myfun.call(this, first_coords.x + row + column, first_coords.y - row + column + 1, fraction);
             }
-            for (var column = -1; column < row_length; column++) {
+            for (let column = -1; column < row_length; column++) {
                 myfun.call(this, first_coords.x + row + column, first_coords.y - row + column, fraction);
             }
         }

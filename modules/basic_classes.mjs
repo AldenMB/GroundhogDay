@@ -14,7 +14,7 @@ class Tile {
         this.interactable = false;
     }
     get appearance() {
-        var s = $("<span>");
+        let s = $("<span>");
         if (this.interactable) {
             s.append(this.interactable.appearance);
         }
@@ -27,7 +27,7 @@ class Tile {
         return s;
     }
     remove_hog(hog) {
-        var index = this.hogs.indexOf(hog);
+        let index = this.hogs.indexOf(hog);
         if (index > -1) {
             this.hogs.splice(index, 1);
         };
@@ -118,7 +118,7 @@ class Tile {
         return 'tile_' + this.x + '_' + this.y;
     }
     render_update() {
-        var td = $('#' + this.id);
+        let td = $('#' + this.id);
         td.empty();
         td.append(this.appearance);
         if (this.floor === 'r') {
@@ -254,13 +254,13 @@ class Board {
         this.replenish_givers();
     }
     render() {
-        var board_container = $("#board_container")
-        var board_table = $("<table>")
-        for (var j = this.height - 1; j >= 0; j--) {
-            var tr = $("<tr>")
-            for (var i = 0; i < this.width; i++) {
-                var td = $("<td>");
-                var tile = this.tileAt(i, j);
+        let board_container = $("#board_container")
+        let board_table = $("<table>")
+        for (let j = this.height - 1; j >= 0; j--) {
+            let tr = $("<tr>")
+            for (let i = 0; i < this.width; i++) {
+                let td = $("<td>");
+                let tile = this.tileAt(i, j);
                 td.attr("id", tile.id);
                 if (tile.floor === "r") {
                     td.addClass("road")
@@ -286,7 +286,7 @@ class Board {
         $("#step_count").empty().append(`This day has gone on for ${this.number_of_steps} steps.`);
     }
     next_frame() {
-        var frames_per_cycle = 60;
+        let frames_per_cycle = 60;
         this.frame++
         this.window.shift_step();
         this.window.draw_visible(this.frame / frames_per_cycle);
@@ -363,7 +363,7 @@ class Hog {
         this.tile.remove_hog(this);
     }
     get appearance() {
-        var s = $("<span>");
+        let s = $("<span>");
         s.addClass("hog");
         if (this.looped) {
             s.addClass("looped");
@@ -403,7 +403,7 @@ class Hog {
         this.tile.hogs.push(this);
     }
     neighbor_tiles() {
-        var obj = {
+        let obj = {
             left: this.tile.to_my(this.left),
             right: this.tile.to_my(this.right),
             front: this.tile.to_my(this.direction),
@@ -446,22 +446,22 @@ class Hog {
         return '';
     }
     following() {
-        var temp_hog = new Hog(this.tile, this.direction);
+        let temp_hog = new Hog(this.tile, this.direction);
         temp_hog.move();
-        var test_tile = temp_hog.tile;
-        var test_direction = temp_hog.going();
+        let test_tile = temp_hog.tile;
+        let test_direction = temp_hog.going();
         temp_hog.deconstruct();
         return test_tile.hog_going(test_direction);
     }
     going_to_t() {
-        var temp_hog = new Hog(this.tile, this.direction);
+        let temp_hog = new Hog(this.tile, this.direction);
         temp_hog.move();
         if (temp_hog.tile === this.tile) {
             temp_hog.deconstruct();
             return false;
         }
-        var temp_hog_neighbors = temp_hog.neighbor_tiles();
-        var condition = (temp_hog_neighbors.front.floor === '' &&
+        let temp_hog_neighbors = temp_hog.neighbor_tiles();
+        let condition = (temp_hog_neighbors.front.floor === '' &&
             temp_hog_neighbors.right.floor === 'r' &&
             temp_hog_neighbors.left.floor === 'r');
         temp_hog.deconstruct();
@@ -469,9 +469,9 @@ class Hog {
     }
     hog_competing_for_t() {
         if (!this.going_to_t()) return false;
-        var temp_hog = new Hog(this.tile, this.direction);
+        let temp_hog = new Hog(this.tile, this.direction);
         temp_hog.move();
-        var ret_val = temp_hog.neighbor_tiles().left.hog_going(temp_hog.right);
+        let ret_val = temp_hog.neighbor_tiles().left.hog_going(temp_hog.right);
         temp_hog.deconstruct();
         if (ret_val.has_stepped) {
             return false;
@@ -601,7 +601,7 @@ class House {
         this.tile.house = false;
     }
     rotate(times = 1) {
-        for (var i = 0; i < times; i++) {
+        for (let i = 0; i < times; i++) {
             this.direction = {
                 "N": "E",
                 "E": "S",
