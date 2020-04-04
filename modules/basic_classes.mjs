@@ -172,12 +172,13 @@ class Board {
         this.is_changed = false; //this variable is used to un-loop and un-stuck all the hog at the appropriate time.
         this.number_of_steps = 0; //this stores the value for the day-length dispay, and is otherwise unused.
         this.window = new GameWindow(this);
-        this.frame = 0;
+		this.steptime_millis = Date.now();
 		
+		
+		//some time when I have more patience I will work out something better than this monstrosity:
 		let myboard = this;
 		document.getElementById('reset').onclick = function(){			
 			myboard.reset_day();
-			myboard.next_frame();
 		}			
     }
     get selected_tool() {
@@ -284,20 +285,6 @@ class Board {
     }
     update_step_display() {
         $("#step_count").empty().append(`This day has gone on for ${this.number_of_steps} steps.`);
-    }
-    next_frame() {
-        let frames_per_cycle = 60;
-        this.frame++
-        this.window.shift_step();
-        this.window.draw_visible(this.frame / frames_per_cycle);
-        if (this.frame >= frames_per_cycle) {
-            this.frame = 0;
-            this.step();
-            this.update_step_display();
-            for (let tile of this.tiles) {
-                tile.render_update();
-            }
-        }
     }
     tilesFromMatrix(matrix, corner) {
         //input format:

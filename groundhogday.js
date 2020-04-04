@@ -4,6 +4,10 @@ import {Board} from './modules/basic_classes.mjs';
 import {Castle, Berry_Bush, Tree} from './modules/hog_interactions.mjs';
 import {load_data, recipes} from './modules/load_data.mjs';
 
+const DAY_DURATION_MILLIS = 60000;
+const STEPS_PER_DAY = 45;
+const STEP_DURATION_MILLIS = DAY_DURATION_MILLIS/STEPS_PER_DAY;
+
 load_data().then(function(){
 	$(document).ready( function() {
 		let b = new Board(7, 6);
@@ -29,9 +33,30 @@ load_data().then(function(){
 		b.tileAt(5, 3).road_toggle();
 
 		b.render();
+		
 		setInterval(function() {
-			b.next_frame();
-		}, 14)
+			b.step();
+            b.update_step_display();
+            for (let tile of b.tiles) {
+                tile.render_update();
+            }
+			b.steptime_millis = Date.now();
+		}, STEP_DURATION_MILLIS);
+		
+		function animate(){
+			let fraction = (Date.now() - b.steptime_millis)/STEP_DURATION_MILLIS;
+			fraction = Math.max(0, fraction)
+			b.window.draw_visible(fraction);
+			window.requestAnimationFrame(animate);
+		}
+		
+		window.requestAnimationFrame(animate)
+		
+		//used for scrolling through the view using arrow keys
+		setInterval(function() {
+			b.window.shift_step();
+		}, 14);
+		
 	});	
 });
 
