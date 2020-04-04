@@ -1,6 +1,7 @@
 import {mod} from './utilities.mjs';
 import {Hog} from './basic_classes.mjs';
 import {Resource} from './graphics.mjs';
+import {images} from './load_data.mjs';
 
 
 function rotateMatrix(matrix) { //rotates a matrix counter-clockwise
@@ -217,7 +218,7 @@ class Castle extends Taker {
         return 'C';
     }
     graphic() {
-        return document.getElementById("castle");
+        return images["castle"];
     }
     spriteData(tile) {
         let graphic = this.graphic(),
@@ -258,11 +259,11 @@ class Berry_Bush extends Giver {
     graphic(count) {
         switch (count) {
             case 2:
-                return document.getElementById("berry_bush_2");
+                return images["berry_bush_2"];
             case 1:
-                return document.getElementById("berry_bush_1");
+                return images["berry_bush_1"];
             default:
-                return document.getElementById("berry_bush_0");
+                return images["berry_bush_0"];
         }
     }
 }
@@ -284,9 +285,9 @@ class Tree extends Giver {
     graphic(count) {
         switch (count) {
             case 1:
-                return document.getElementById("tree_1");
+                return images["tree_1"];
             default:
-                return document.getElementById("tree_0");
+                return images["tree_0"];
         }
     }
 }
@@ -324,13 +325,13 @@ class Shop {
     graphic() {
         switch (this.rotation) {
             case "NW":
-                return document.getElementById("shop_nw");
+                return images["shop_nw"];
             case "NE":
-                return document.getElementById("shop_ne");
+                return images["shop_ne"];
             case "SW":
-                return document.getElementById("shop_sw");
+                return images["shop_sw"];
             case "SE":
-                return document.getElementById("shop_se");
+                return images["shop_se"];
         }
     }
     spriteData(tile) {

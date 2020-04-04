@@ -1,7 +1,7 @@
 import {GameWindow} from './graphics.mjs';
 import {Matchmaker, Castle, Berry_Bush, Tree, Shop, ShopInput, ShopOutput, Giver} from './hog_interactions.mjs';
 import {mod, ARROWS} from './utilities.mjs';
-import {recipes} from './load_data.mjs';
+import {recipes, images} from './load_data.mjs';
 
 class Tile {
     constructor(board, x, y, floor = '') {
@@ -564,13 +564,13 @@ class Hog {
     get graphic() {
         switch (this.direction) {
             case "N":
-                return document.getElementById("up_right_hog");
+                return images["up_right_hog"];
             case "E":
-                return document.getElementById("down_right_hog");
+                return images["down_right_hog"];
             case "S":
-                return document.getElementById("down_left_hog");
+                return images["down_left_hog"];
             case "W":
-                return document.getElementById("up_left_hog");
+                return images["up_left_hog"];
         }
     }
 }
@@ -615,13 +615,13 @@ class House {
     graphic() {
         switch (this.direction) {
             case "N":
-                return document.getElementById("hole_up_right");
+                return images["hole_up_right"];
             case "E":
-                return document.getElementById("hole_down_right");
+                return images["hole_down_right"];
             case "S":
-                return document.getElementById("hole_down_left");
+                return images["hole_down_left"];
             case "W":
-                return document.getElementById("hole_up_left");
+                return images["hole_up_left"];
         }
     }
 }

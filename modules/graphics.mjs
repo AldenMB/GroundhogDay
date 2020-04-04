@@ -1,6 +1,6 @@
 import {ShopOutput} from './hog_interactions.mjs';
 import {mod} from './utilities.mjs';
-//import images from './load_data.mjs';
+import {images} from './load_data.mjs';
 
 class GameWindow {
     constructor(board) {
@@ -126,12 +126,11 @@ class GameWindow {
             this.tile_size * 0.8);
     }
     draw_floor_at(x, y) {
-        //this.drawAt(images['grass'], x, y);
-		this.drawAt(document.getElementById("grass"), x, y);
+        this.drawAt(images['grass'], x, y);
     }
     draw_road_at(x, y) {
         if (this.board.tileAt(x, y).floor === '') return;
-        this.drawAt(document.getElementById("road"), x, y);
+        this.drawAt(images['road'], x, y);
     }
     skewed_position_x(x, y) {
         return (this.shift.x) + ((this.tile_size * Math.sqrt(0.5)) * (x + y + 1 - this.board.height));
@@ -400,7 +399,7 @@ class Resource {
 		if( ["berry","wood","steak","bread","perfume"].includes(this.name) ){
 			graphic_id = this.name;
 		}
-		return document.getElementById(graphic_id);
+		return images[graphic_id];
     }
     toString() {
         return this.name;
