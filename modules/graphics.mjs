@@ -1,5 +1,4 @@
 import {ShopOutput} from './hog_interactions.mjs';
-import {mod} from './utilities.mjs';
 import {images} from './load_data.mjs';
 
 class GameWindow {

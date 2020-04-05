@@ -542,7 +542,7 @@ class ShopOutput extends Giver {
     };
 }
 
-// this is the interface to get graphics for a resource, mostly. The name of the resource is used elsewhere.
+// this is the interface to get graphics for a resource, mostly. The name of the resource is used elsewhere. This class should not exist.
 class Resource {
     constructor(name) {
         this.name = name;
