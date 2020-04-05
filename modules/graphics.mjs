@@ -25,10 +25,10 @@ class GameWindow {
             right: false
         };
     }
-    get tileWidth() {
+    get tile_width() {
         return this.tile_size * Math.SQRT2;
     }
-    get tileHeight() {
+    get tile_height() {
         return this.tile_size * Math.SQRT1_2;
     }
     my_key_down(event) {
@@ -106,20 +106,20 @@ class GameWindow {
         let tile = this.tileAtClick(event.offsetX, event.offsetY);
         tile.on_click();
     }
-    drawAt(graphic, x, y, spriteData = []) { //spriteData=[start_x,start_y,sprite_width,sprite_height]
+    drawAt(graphic, col, row, spriteData = []) { //spriteData=[start_x,start_y,sprite_width,sprite_height]
         this.context.drawImage(graphic,
             ...spriteData,
-            this.skewed_position_x(x, y) - (this.tileWidth / 2),
-            this.skewed_position_y(x, y),
-            this.tileWidth,
-            this.tileHeight);
+            this.skewed_position_x(col, row) - (this.tile_width / 2),
+            this.skewed_position_y(col, row),
+            this.tile_width,
+            this.tile_height);
     }
-    drawResourceAt(resource, x, y) {
+    drawResourceAt(resource, col, row) {
         let graphic = images[resource];
         this.context.drawImage(graphic,
             //...spriteData,
-            this.skewed_position_x(x, y) - (this.tileWidth / 4),
-            this.skewed_position_y(x, y),
+            this.skewed_position_x(col, row) - (this.tile_width / 4),
+            this.skewed_position_y(col, row),
             this.tile_size * 0.8,
             this.tile_size * 0.8);
     }
@@ -130,30 +130,24 @@ class GameWindow {
         if (this.board.tileAt(x, y).floor === '') return;
         this.drawAt(images['road'], x, y);
     }
-    skewed_position_x(x, y) {
-        return (this.shift.x) + ((this.tile_size * Math.sqrt(0.5)) * (x + y + 1 - this.board.height));
+    skewed_position_x(col, row) {
+        return this.shift.x + this.tile_width/2 * (col + row + 1 - this.board.height);
     }
-    skewed_position_y(x, y) {
-        return (this.shift.y) + ((this.tile_size * Math.sqrt(0.5) * 0.5) * (x - y + this.board.height - 1));
+    skewed_position_y(col, row) {
+        return this.shift.y + this.tile_height/2 * (col - row + this.board.height - 1);
     }
     skewed_position_inverse(x, y) {
-        let horizontal_half = this.tile_size * Math.sqrt(0.5);
-        let vertical_half = horizontal_half * 0.5;
-        let newx = x - (this.shift.x + horizontal_half * (1 - this.board.height));
-        let newy = y - (this.shift.y + vertical_half * (this.board.height - 1));
-        newx /= horizontal_half;
-        newy /= vertical_half;
-        let obj = {
-            x: (newx + newy) / 2,
-            y: (newx - newy) / 2 + 1
-        }; // I don't know why this 1 belongs here.
+        let scaledx = (x - this.shift.x)/this.tile_width,
+			scaledy = (y - this.shift.y)/this.tile_height,
+			obj = {
+            col: Math.floor(scaledx + scaledy),
+            row: Math.floor(scaledx - scaledy +this.board.height)
+        };
         return obj;
     }
     tileAtClick(x, y) { //feed me mouse coordinates
         let reduced_coords = this.skewed_position_inverse(x, y);
-        reduced_coords.x = Math.floor(reduced_coords.x);
-        reduced_coords.y = Math.floor(reduced_coords.y);
-        return this.board.tileAt(reduced_coords.x, reduced_coords.y);
+        return this.board.tileAt(reduced_coords.col, reduced_coords.row);
     }
     clear() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -298,8 +292,6 @@ class GameWindow {
             return;
         }
 
-
-
         let graphic = null;
         if (fraction <= 1) {
             graphic = interactable.previousGraphic();
@@ -316,13 +308,13 @@ class GameWindow {
         let shopOut = tile.interactable;
         if (!(shopOut instanceof ShopOutput)) return;
 
-        let horizontal_sep = this.tileWidth / 4,
-            vertical_sep = this.tileHeight / 2,
+        let horizontal_sep = this.tile_width / 4,
+            vertical_sep = this.tile_height / 2,
             shop = shopOut.shop;
 
         let ctx = this.context;
         ctx.save();
-        ctx.translate(shop.center_offset[0] * this.tileWidth, shop.center_offset[1] * this.tileHeight);
+        ctx.translate(shop.center_offset[0] * this.tile_width, shop.center_offset[1] * this.tile_height);
 
         let outlist = shop.output.pic_list(fraction < 1);
         let inlist = shop.input.pic_list(fraction < 2);
@@ -359,16 +351,16 @@ class GameWindow {
     }
     do_everywhere_visible(myfun, fraction = 1) {
         let first_coords = this.skewed_position_inverse(0, 0);
-        first_coords.x = Math.floor(first_coords.x);
-        first_coords.y = Math.floor(first_coords.y);
-        let row_length = 2 + Math.floor(this.canvas.width / (this.tile_size * Math.sqrt(2)));
-        let num_rows = 2 + Math.floor(this.canvas.height / (this.tile_size * Math.sqrt(0.5)));
-        for (let row = 0; row < num_rows; row++) {
-            for (let column = -1; column < row_length; column++) {
-                myfun.call(this, first_coords.x + row + column, first_coords.y - row + column + 1, fraction);
+        let num_cols = Math.ceil(this.canvas.width / this.tile_width),
+			num_rows = Math.ceil(this.canvas.height / this.tile_height);
+        for (let row = 0; row <= num_rows; row++) {
+			let x = first_coords.col + row,
+				y = first_coords.row - row;
+            for (let column = -1; column < num_cols; column++) {
+                myfun.call(this, x + column, y + column + 1, fraction);
             }
-            for (let column = -1; column < row_length; column++) {
-                myfun.call(this, first_coords.x + row + column, first_coords.y - row + column, fraction);
+            for (let column = -1; column < num_cols; column++) {
+                myfun.call(this, x + column, y + column, fraction);
             }
         }
     }
