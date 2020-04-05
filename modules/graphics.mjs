@@ -25,6 +25,23 @@ class GameWindow {
             right: false
         };
     }
+	//PUBLIC
+    draw_visible(fraction = 1) {
+        this.clear();
+        this.do_everywhere_visible(this.draw_floor_at);
+        this.do_everywhere_visible(this.draw_road_at);
+        this.do_everywhere_visible(this.draw_house_at);
+        this.do_everywhere_visible(this.draw_interactable_at, fraction * 3);
+        this.do_everywhere_visible(this.draw_hogs_at, fraction * 3);
+        this.do_everywhere_visible(this.draw_shop_inventory_at, fraction * 3);
+    }	
+    shift_step() {
+        this.shift.x += this.shift_speed.x;
+        this.shift.y += this.shift_speed.y;
+    }
+	
+	//PRIVATE
+	
     get tile_width() {
         return this.tile_size * Math.SQRT2;
     }
@@ -98,10 +115,6 @@ class GameWindow {
                 break;
         }
     }
-    shift_step() {
-        this.shift.x += this.shift_speed.x;
-        this.shift.y += this.shift_speed.y;
-    }
     my_click(event) {
         let tile = this.tileAtClick(event.offsetX, event.offsetY);
         tile.on_click();
@@ -114,21 +127,13 @@ class GameWindow {
             this.tile_width,
             this.tile_height);
     }
-    drawResourceAt(resource, col, row) {
-        let graphic = images[resource];
-        this.context.drawImage(graphic,
-            //...spriteData,
-            this.skewed_position_x(col, row) - (this.tile_width / 4),
-            this.skewed_position_y(col, row),
-            this.tile_size * 0.8,
-            this.tile_size * 0.8);
-    }
     draw_floor_at(x, y) {
         this.drawAt(images['grass'], x, y);
     }
     draw_road_at(x, y) {
-        if (this.board.tileAt(x, y).floor === '') return;
-        this.drawAt(images['road'], x, y);
+        if (this.board.tileAt(x, y).floor === 'r'){
+			this.drawAt(images['road'], x, y);
+		}
     }
     skewed_position_x(col, row) {
         return this.shift.x + this.tile_width/2 * (col + row + 1 - this.board.height);
@@ -152,21 +157,67 @@ class GameWindow {
     clear() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
-    draw_hog_at(hog, x, y, fraction = 1) {
-        let stack_separation = 10;
+    do_everywhere_visible(myfun, fraction = 1) {
+        let first_coords = this.skewed_position_inverse(0, 0);
+        let num_cols = Math.ceil(this.canvas.width / this.tile_width),
+			num_rows = Math.ceil(this.canvas.height / this.tile_height);
+        for (let row = 0; row <= num_rows; row++) {
+			let x = first_coords.col + row,
+				y = first_coords.row - row;
+            for (let column = -1; column < num_cols; column++) {
+                myfun.call(this, x + column, y + column + 1, fraction);
+            }
+            for (let column = -1; column < num_cols; column++) {
+                myfun.call(this, x + column, y + column, fraction);
+            }
+        }
+    }
+    hop_path(start, end, fraction) { //feed this objects with x and y
+        let jumpheight = 60;
+        let obj = {
+            x: start.x * (1 - fraction) + end.x * fraction,
+            y: start.y * (1 - fraction) + end.y * fraction - jumpheight * fraction * (1 - fraction)
+        }
+        return obj;
+    }
+    draw_house_at(x, y) {
+        let house = this.board.tileAt(x, y).house;
+        if(house){
+			this.drawAt(house.graphic(), x, y);
+		}
+    }
+    draw_interactable_at(x, y, fraction = 1) {
+        let tile = this.board.tileAt(x, y);
+        let inter = tile.interactable;
+		if(inter){
+			let graphic = (fraction <= 1) ? inter.previousGraphic() : inter.currentGraphic();
+			let spriteData = inter.spriteData(tile);
+			this.drawAt(graphic, x, y, spriteData);
+		}
+        
+    }
+    draw_hogs_at(x, y, fraction = 1) {
+        let tile = this.board.tileAt(x, y);
+        for (let hog of tile.hogs) {
+            this.draw_hog_at(hog, x, y, fraction);
+        }
+    }
+	
+	//REQUIRES REVISION
+	
+    draw_hog_at(hog, col, row, fraction = 1) {
+        const stack_separation = 10;
         let ctx = this.context;
         ctx.save();
 
-        let new_x = x;
-        let new_y = y;
         let new_coords = {
-            x: this.skewed_position_x(new_x, new_y),
-            y: this.skewed_position_y(new_x, new_y) - (stack_separation * hog.stack_position)
+            x: this.skewed_position_x(col, row),
+            y: this.skewed_position_y(col, row) - (stack_separation * hog.stack_position)
         };
 		let current_coords = new_coords;
 		if (hog.hopped_from && fraction < 1){
-            let old_x = x;
-            let old_y = y;
+            let old_x = col;
+            let old_y = row;
             switch (hog.direction) {
                 case "N":
                     old_y -= 1;
@@ -271,38 +322,16 @@ class GameWindow {
         ctx.restore();
     }
     drawHere(item, context) { //called by draw_hog_at
-        context.drawImage(item.graphic, -this.tile_size * 0.4, -this.tile_size * 0.2, this.tile_size * 0.8, this.tile_size * 0.8);
+        context.drawImage(
+			item.graphic, 
+			-this.tile_size * 0.4, 
+			-this.tile_size * 0.2, 
+			this.tile_size * 0.8, 
+			this.tile_size * 0.8
+		);
     }
-    draw_hogs_at(x, y, fraction = 1) {
-        let tile = this.board.tileAt(x, y);
-        for (let hog of tile.hogs) {
-            this.draw_hog_at(hog, x, y, fraction);
-        }
-    }
-    draw_house_at(x, y) {
-        let house = this.board.tileAt(x, y).house;
-        if (!house) return;
 
-        this.drawAt(house.graphic(), x, y);
-    }
-    draw_interactable_at(x, y, fraction = 1) {
-        let tile = this.board.tileAt(x, y);
-        let interactable = tile.interactable;
-        if (!interactable) {
-            return;
-        }
 
-        let graphic = null;
-        if (fraction <= 1) {
-            graphic = interactable.previousGraphic();
-        } else {
-            graphic = interactable.currentGraphic();
-        }
-
-        let spriteData = interactable.spriteData(tile);
-
-        this.drawAt(graphic, x, y, spriteData);
-    }
     draw_shop_inventory_at(x, y, fraction = 3) {
         let tile = this.board.tileAt(x, y);
         let shopOut = tile.interactable;
@@ -326,53 +355,22 @@ class GameWindow {
 				} else {
 					ctx.globalAlpha = 0.5;
 				}
-				this.drawResourceAt(pair[0], x, y);
+				this.drawAt(images[pair[0]], x, y, [0,0,1000,500]);
 				ctx.translate(horizontal_sep, 0);
 			}
 		}
 		draw_list = draw_list.bind(this);
 		
         ctx.save();
-        ctx.translate(-horizontal_sep * (outlist.length - 1) / 2, -vertical_sep / 2);
+        ctx.translate(-horizontal_sep * (outlist.length - 1) / 2+this.tile_width/6, -vertical_sep / 2);
 		draw_list(outlist);
         ctx.restore();
 		
-        ctx.translate(-horizontal_sep * (inlist.length - 1) / 2, vertical_sep / 2);
+        ctx.translate(-horizontal_sep * (inlist.length - 1) / 2+this.tile_width/6, vertical_sep / 2);
 		draw_list(inlist);
         ctx.restore();
     }
-    hop_path(start, end, fraction) { //feed this objects with x and y
-        let jumpheight = 60;
-        let obj = {
-            x: start.x * (1 - fraction) + end.x * fraction,
-            y: start.y * (1 - fraction) + end.y * fraction - jumpheight * fraction * (1 - fraction)
-        }
-        return obj;
-    }
-    do_everywhere_visible(myfun, fraction = 1) {
-        let first_coords = this.skewed_position_inverse(0, 0);
-        let num_cols = Math.ceil(this.canvas.width / this.tile_width),
-			num_rows = Math.ceil(this.canvas.height / this.tile_height);
-        for (let row = 0; row <= num_rows; row++) {
-			let x = first_coords.col + row,
-				y = first_coords.row - row;
-            for (let column = -1; column < num_cols; column++) {
-                myfun.call(this, x + column, y + column + 1, fraction);
-            }
-            for (let column = -1; column < num_cols; column++) {
-                myfun.call(this, x + column, y + column, fraction);
-            }
-        }
-    }
-    draw_visible(fraction = 1) {
-        this.clear();
-        this.do_everywhere_visible(this.draw_floor_at);
-        this.do_everywhere_visible(this.draw_road_at);
-        this.do_everywhere_visible(this.draw_house_at);
-        this.do_everywhere_visible(this.draw_interactable_at, fraction * 3);
-        this.do_everywhere_visible(this.draw_hogs_at, fraction * 3);
-        this.do_everywhere_visible(this.draw_shop_inventory_at, fraction * 3);
-    }
+
 }
 
 
