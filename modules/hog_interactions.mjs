@@ -1,6 +1,5 @@
 import {mod} from './utilities.mjs';
 import {Hog} from './basic_classes.mjs';
-import {Resource} from './graphics.mjs';
 import {images} from './load_data.mjs';
 
 
@@ -541,6 +540,23 @@ class ShopOutput extends Giver {
     deconstruct() {
         this.shop.deconstruct()
     };
+}
+
+// this is the interface to get graphics for a resource, mostly. The name of the resource is used elsewhere.
+class Resource {
+    constructor(name) {
+        this.name = name;
+    }
+    get graphic() {
+		let graphic_id = "undefined_item";
+		if( ["berry","wood","steak","bread","perfume"].includes(this.name) ){
+			graphic_id = this.name;
+		}
+		return images[graphic_id];
+    }
+    toString() {
+        return this.name;
+    }
 }
 
 export {Matchmaker, Castle, Berry_Bush, Tree, Shop, ShopInput, ShopOutput, Giver};

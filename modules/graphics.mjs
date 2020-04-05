@@ -115,9 +115,8 @@ class GameWindow {
             this.tileWidth,
             this.tileHeight);
     }
-    drawResourceAt(resource_name, x, y) {
-        let resource = new Resource(resource_name),
-            graphic = resource.graphic;
+    drawResourceAt(resource, x, y) {
+        let graphic = images[resource];
         this.context.drawImage(graphic,
             //...spriteData,
             this.skewed_position_x(x, y) - (this.tileWidth / 4),
@@ -385,21 +384,5 @@ class GameWindow {
     }
 }
 
-// this is the interface to get graphics for a resource, mostly. The name of the resource is used elsewhere.
-class Resource {
-    constructor(name) {
-        this.name = name;
-    }
-    get graphic() {
-		let graphic_id = "undefined_item";
-		if( ["berry","wood","steak","bread","perfume"].includes(this.name) ){
-			graphic_id = this.name;
-		}
-		return images[graphic_id];
-    }
-    toString() {
-        return this.name;
-    }
-}
 
-export {GameWindow, Resource};
+export {GameWindow};
