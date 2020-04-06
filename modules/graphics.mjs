@@ -1,6 +1,8 @@
 import {ShopOutput} from './hog_interactions.mjs';
 import {images} from './load_data.mjs';
 
+const ITEM_SPRITE_DATA = [0,0,1000,500];
+
 class GameWindow {
     constructor(board) {
         this.board = board;
@@ -202,172 +204,116 @@ class GameWindow {
             this.draw_hog_at(hog, x, y, fraction);
         }
     }
-	
-	//REQUIRES REVISION
-	
+	skew_x(direction){
+		let distance = this.tile_width/2;
+		if(['W','S'].includes(direction)){
+			distance *= -1;
+		}
+		return distance;
+	}
+	skew_y(direction){
+		let distance = this.tile_height/2;
+		if(['W','N'].includes(direction)){
+			distance *= -1;
+		}
+		return distance;
+	}	
     draw_hog_at(hog, col, row, fraction = 1) {
         const stack_separation = 10;
         let ctx = this.context;
         ctx.save();
-
-        let new_coords = {
-            x: this.skewed_position_x(col, row),
-            y: this.skewed_position_y(col, row) - (stack_separation * hog.stack_position)
-        };
-		let current_coords = new_coords;
-		if (hog.hopped_from && fraction < 1){
-            let old_x = col;
-            let old_y = row;
-            switch (hog.direction) {
-                case "N":
-                    old_y -= 1;
-                    break;
-                case "S":
-                    old_y += 1;
-                    break;
-                case "E":
-                    old_x -= 1;
-                    break;
-                case "W":
-                    old_x += 1;
-                    break;
-            }
-            let old_coords = {
-                x: this.skewed_position_x(old_x, old_y),
-                y: this.skewed_position_y(old_x, old_y) - (stack_separation * hog.previous_stack_position)
-            };
-            current_coords = this.hop_path(old_coords, new_coords, fraction);
-        }
-
-        ctx.translate(current_coords.x, current_coords.y);
-
-        //draw self
-        this.drawHere(hog, ctx);
-
+		
+		if(hog.hopped_from && fraction<1){
+			let hop_shift = this.hop_path(
+				{	x: -this.skew_x(hog.direction),
+					y: -this.skew_y(hog.direction) - stack_separation*hog.previous_stack_position
+				},
+				{	x: 0,
+					y: -stack_separation*hog.stack_position
+				},
+				fraction
+			);
+			ctx.translate(hop_shift.x, hop_shift.y);
+		}
+		if(fraction>=1){
+			ctx.translate(0, -stack_separation*hog.stack_position);
+		}
+		ctx.translate(0,-this.tile_height/4);
+		this.drawAt(hog.graphic, col, row, [-100,0,800,500]);
+		
         //draw any items we are moving
+		//NOTE TO SELF: get rid of the toString once resources are all strings.
+		ctx.translate(this.tile_width/4, 0);
         if (fraction <= 1 && hog.previous_holding) {
-            this.drawHere(hog.previous_holding, ctx);
+			this.drawAt(images[hog.previous_holding.toString()], col, row,ITEM_SPRITE_DATA);
         }
         if (2 > fraction && fraction > 1 && hog.holding && !hog.gave_to && !hog.took_from) {
-            this.drawHere(hog.holding, ctx);
+			this.drawAt(images[hog.holding.toString()], col, row,ITEM_SPRITE_DATA);
         }
         if (2 > fraction && fraction > 1 && hog.gave_to) {
-            let from = {
-                x: 0,
-                y: 0
-            };
+            let from = {x:0,y:0};
             let to = {
-                x: from.x,
-                y: from.y
-            }
-            switch (hog.direction_of(hog.gave_to)) {
-                case 'N':
-                    to.x += this.tile_size * Math.sqrt(0.5);
-                    to.y -= this.tile_size * Math.sqrt(0.125);
-                    break;
-                case 'E':
-                    to.x += this.tile_size * Math.sqrt(0.5);
-                    to.y += this.tile_size * Math.sqrt(0.125);
-                    break;
-                case 'S':
-                    to.x -= this.tile_size * Math.sqrt(0.5);
-                    to.y += this.tile_size * Math.sqrt(0.125);
-                    break;
-                case 'W':
-                    to.x -= this.tile_size * Math.sqrt(0.5);
-                    to.y -= this.tile_size * Math.sqrt(0.125);
-                    break;
-                default:
-                    console.log('What? Error!');
+                x: this.skew_x(hog.direction_of(hog.gave_to)),
+                y: this.skew_y(hog.direction_of(hog.gave_to))
             }
             let item_coords = this.hop_path(from, to, fraction - 1);
-            ctx.drawImage(hog.previous_holding.graphic, -this.tile_size * 0.4 + item_coords.x, -this.tile_size * 0.2 + item_coords.y, this.tile_size * 0.8, this.tile_size * 0.8);
+			ctx.translate(item_coords.x,item_coords.y);
+			this.drawAt(images[hog.previous_holding.toString()], col, row,ITEM_SPRITE_DATA);
         }
         if (2 > fraction && fraction > 1 && hog.took_from) {
+            let to = {x:0,y:0};
             let from = {
-                x: 0,
-                y: 0
-            };
-            let to = {
-                x: from.x,
-                y: from.y
+                x: this.skew_x(hog.direction_of(hog.took_from)),
+                y: this.skew_y(hog.direction_of(hog.took_from))
             }
-            switch (hog.direction_of(hog.took_from)) {
-                case 'N':
-                    to.x += this.tile_size * Math.sqrt(0.5);
-                    to.y -= this.tile_size * Math.sqrt(0.125);
-                    break;
-                case 'E':
-                    to.x += this.tile_size * Math.sqrt(0.5);
-                    to.y += this.tile_size * Math.sqrt(0.125);
-                    break;
-                case 'S':
-                    to.x -= this.tile_size * Math.sqrt(0.5);
-                    to.y += this.tile_size * Math.sqrt(0.125);
-                    break;
-                case 'W':
-                    to.x -= this.tile_size * Math.sqrt(0.5);
-                    to.y -= this.tile_size * Math.sqrt(0.125);
-                    break;
-                default:
-                    console.log('What? Error!')
-            }
-            let item_coords = this.hop_path(to, from, fraction - 1);
-            ctx.drawImage(hog.holding.graphic, -this.tile_size * 0.4 + item_coords.x, -this.tile_size * 0.2 + item_coords.y, this.tile_size * 0.8, this.tile_size * 0.8);
+            let item_coords = this.hop_path(from, to, fraction - 1);
+			ctx.translate(item_coords.x,item_coords.y);
+			this.drawAt(images[hog.holding.toString()], col, row,ITEM_SPRITE_DATA);
         }
         if (fraction >= 2 && hog.holding) {
-            this.drawHere(hog.holding, ctx);
+			this.drawAt(images[hog.holding.toString()], col, row,ITEM_SPRITE_DATA);
         }
 
         ctx.restore();
     }
-    drawHere(item, context) { //called by draw_hog_at
-        context.drawImage(
-			item.graphic, 
-			-this.tile_size * 0.4, 
-			-this.tile_size * 0.2, 
-			this.tile_size * 0.8, 
-			this.tile_size * 0.8
-		);
-    }
-
-
     draw_shop_inventory_at(x, y, fraction = 3) {
-        let tile = this.board.tileAt(x, y);
-        let shopOut = tile.interactable;
+        const shopOut = this.board.tileAt(x, y).interactable;
         if (!(shopOut instanceof ShopOutput)) return;
 
-        let horizontal_sep = this.tile_width / 4,
+        const horizontal_sep = this.tile_width / 4,
             vertical_sep = this.tile_height / 2,
             shop = shopOut.shop;
 
-        let ctx = this.context;
+        const ctx = this.context;
         ctx.save();
-        ctx.translate(shop.center_offset[0] * this.tile_width, shop.center_offset[1] * this.tile_height);
+        ctx.translate(
+			shop.center_offset[0] * this.tile_width,
+			shop.center_offset[1] * this.tile_height
+		);
 
         let outlist = shop.output.pic_list(fraction < 1);
         let inlist = shop.input.pic_list(fraction < 2);
 		
 		function draw_list(list){
+			ctx.translate(-horizontal_sep * (list.length - 1) / 2, 0);
 			for (let pair of list) {
-				if (pair[1]) {
-					ctx.globalAlpha = 1;
-				} else {
-					ctx.globalAlpha = 0.5;
-				}
-				this.drawAt(images[pair[0]], x, y, [0,0,1000,500]);
+				ctx.globalAlpha = pair[1] ? 1 : 0.5;
+				this.drawAt(images[pair[0]], x, y, ITEM_SPRITE_DATA);
 				ctx.translate(horizontal_sep, 0);
 			}
 		}
 		draw_list = draw_list.bind(this);
 		
+		ctx.translate(this.tile_width/6, 0);
+		
         ctx.save();
-        ctx.translate(-horizontal_sep * (outlist.length - 1) / 2+this.tile_width/6, -vertical_sep / 2);
+		ctx.translate(0, -vertical_sep/2);
 		draw_list(outlist);
         ctx.restore();
 		
-        ctx.translate(-horizontal_sep * (inlist.length - 1) / 2+this.tile_width/6, vertical_sep / 2);
+		ctx.translate(0, vertical_sep/2);
 		draw_list(inlist);
+		
         ctx.restore();
     }
 
