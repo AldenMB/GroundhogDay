@@ -5,26 +5,6 @@
 <title>Demo Hog Movement</title>
 </head>
 
-<style type="text/css">
-td{
-  color:white;
-  background-color:black;
-  width:4em;
-  height:4em;
-  text-align:center;
-}
-.road{
-  background-color:darkred;
-}
-
-.looped{
-  color:lightgreen;
-}
-.stuck{
-  color:red;
-}
-</style>
-
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 </script>
 
@@ -32,8 +12,10 @@ td{
 </script>
 
 <body>
- <div id="board_container">
- </div>
+ <canvas id="myCanvas" width="800" height="600"
+   style="border:1px solid #000000;" tabindex='1'> 
+ </canvas> 
+
  <div id="step_count">
  This day has gone on for 0 steps.
  </div>
@@ -57,10 +39,6 @@ td{
  <input name="recipe_radio" type="radio" value="perfume">perfume
  <input name="recipe_radio" type="radio" value="steak">steak
  </form>
-
- <canvas id="myCanvas" width="600" height="400"
-   style="border:1px solid #000000;" tabindex='1'> 
- </canvas> 
 
 </body>
 

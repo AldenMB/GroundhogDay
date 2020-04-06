@@ -213,9 +213,6 @@ class Castle extends Taker {
             [0, 0]
         );
     };
-    get appearance() {
-        return 'C';
-    }
     graphic() {
         return images["castle"];
     }
@@ -239,22 +236,6 @@ class Berry_Bush extends Giver {
     baseResourceCount() {
         return 2;
     }
-    get appearance() {
-        switch (this.resource_count) {
-            case 2:
-                return 'BB';
-                break;
-            case 1:
-                return 'Bb';
-                break;
-            case 0:
-                return 'bb';
-                break;
-            default:
-                console.log('Error! Wrong number of resources!');
-                console.log(this)
-        }
-    }
     graphic(count) {
         switch (count) {
             case 2:
@@ -273,13 +254,6 @@ class Tree extends Giver {
     }
     baseResourceCount() {
         return 1;
-    }
-    get appearance() {
-        if (this.resource_count === 1) {
-            return 'T';
-        } else {
-            return 't';
-        }
     }
     graphic(count) {
         switch (count) {
@@ -434,9 +408,6 @@ class ShopInput extends Taker {
     rotate() {
         this.shop.rotate()
     };
-    get appearance() {
-        return 'Si' + this.holding.length;
-    }
     max_interactions(resource_type) {
         if (this.shop.output.resource_count > 0) return 0;
         let recipePart = this.shop.recipeRequires(resource_type);
@@ -525,9 +496,6 @@ class ShopOutput extends Giver {
     rotate() {
         this.shop.rotate()
     };
-    get appearance() {
-        return 'So' + this.resource_count;
-    }
     baseResourceCount() {
         return 0
     };

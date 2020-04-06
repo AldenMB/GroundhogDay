@@ -13,19 +13,6 @@ class Tile {
         this.house = false;
         this.interactable = false;
     }
-    get appearance() {
-        let s = $("<span>");
-        if (this.interactable) {
-            s.append(this.interactable.appearance);
-        }
-        if (this.house) {
-            s.append(this.house.appearance);
-        };
-        for (let hog of this.hogs) {
-            s.append(hog.appearance);
-        };
-        return s;
-    }
     remove_hog(hog) {
         let index = this.hogs.indexOf(hog);
         if (index > -1) {
@@ -112,20 +99,6 @@ class Tile {
                 break;
         }
         this.board.is_changed = true;
-        this.render_update();
-    }
-    get id() {
-        return 'tile_' + this.x + '_' + this.y;
-    }
-    render_update() {
-        let td = $('#' + this.id);
-        td.empty();
-        td.append(this.appearance);
-        if (this.floor === 'r') {
-            td.addClass('road');
-        } else {
-            td.removeClass('road');
-        }
     }
     to_my(direction) {
         switch (direction) {
@@ -248,35 +221,6 @@ class Board {
         this.recall_hog();
         this.replenish_givers();
     }
-    render() {
-        let board_container = $("#board_container")
-        let board_table = $("<table>")
-        for (let j = this.height - 1; j >= 0; j--) {
-            let tr = $("<tr>")
-            for (let i = 0; i < this.width; i++) {
-                let td = $("<td>");
-                let tile = this.tileAt(i, j);
-                td.attr("id", tile.id);
-                if (tile.floor === "r") {
-                    td.addClass("road")
-                }
-                td.append(tile.appearance);
-
-                let clickhandlerfactory = function(i, j, board) {
-                    return function() {
-                        board.tileAt(i, j).on_click();
-                    }
-                }
-                td.bind("click", clickhandlerfactory(i, j, this))
-                tr.append(td)
-            }
-            board_table.append(tr)
-        }
-        board_container.empty()
-        board_container.append(board_table)
-        this.update_step_display();
-        this.window.draw_visible();
-    }
     update_step_display() {
         $("#step_count").empty().append(`This day has gone on for ${this.number_of_steps} steps.`);
     }
@@ -314,8 +258,6 @@ class Hog {
         this.is_waiting = false;
         this.looped = false;
         this.stuck = false;
-		//optional, for to make it easier to follow in text mode.
-        this.decorator = '';
 		//for drawing
         this.hopped_from = false;
         this.previous_stack_position = 0;
@@ -343,20 +285,7 @@ class Hog {
     deconstruct() {
         this.tile.remove_hog(this);
     }
-    get appearance() {
-        let s = $("<span>");
-        s.addClass("hog");
-        if (this.looped) {
-            s.addClass("looped");
-        }
-        if (this.stuck) {
-            s.addClass("stuck");
-        }
-        let string = ARROWS[this.direction] + this.decorator;
-        if (this.holding) string += this.holding.toString();
-        s.text(string);
-        return s;
-    };
+
     move(move_direction = this.going()) {
         if (move_direction === '') return;
         this.hopped_from = this.tile;
@@ -557,18 +486,13 @@ class Hog {
 }
 
 class House {
-    constructor(tile, direction, decorator = "") {
+    constructor(tile, direction) {
         //my properties
         this.tile = tile;
         this.direction = direction;
-        this.decorator = decorator;
         this.hog = new Hog(this.tile, direction);
         //change other objects
-        this.hog.decorator = decorator;
         this.tile.house = this;
-    }
-    get appearance() {
-        return "H" + this.decorator + ARROWS[this.direction];
     }
     recall_hog() {
         this.hog.move_to(this.tile, this.direction);

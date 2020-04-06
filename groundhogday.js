@@ -31,15 +31,10 @@ load_data().then(function(){
 		b.tileAt(4, 3).road_toggle();
 		b.tileAt(4, 4).road_toggle();
 		b.tileAt(5, 3).road_toggle();
-
-		b.render();
 		
 		setInterval(function() {
 			b.step();
             b.update_step_display();
-            for (let tile of b.tiles) {
-                tile.render_update();
-            }
 			b.steptime_millis = Date.now();
 		}, STEP_DURATION_MILLIS);
 		
