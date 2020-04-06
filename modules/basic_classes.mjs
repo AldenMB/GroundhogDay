@@ -144,7 +144,7 @@ class Board {
             .map((spot, index) => new Tile(this, mod(index, this.width), Math.floor(index / this.width)));
         this.is_changed = false; //this variable is used to un-loop and un-stuck all the hog at the appropriate time.
         this.number_of_steps = 0; //this stores the value for the day-length dispay, and is otherwise unused.
-        this.window = new GameWindow(this);
+        this.gameWindow = new GameWindow(this);
 		this.steptime_millis = Date.now();
 		document.getElementById('reset').onclick = this.reset_day.bind(this);
     }

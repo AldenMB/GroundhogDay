@@ -10,9 +10,9 @@ const STEP_DURATION_MILLIS = DAY_DURATION_MILLIS/STEPS_PER_DAY;
 
 load_data().then(function(){
 	$(document).ready( function() {
-		let b = new Board(7, 6);
+		let b = new Board(10, 15);
 
-		b.tileAt(5, 1).interact_toggle(Castle);
+		b.tileAt(-2, 1).interact_toggle(Castle);
 		b.tileAt(2, 2).shop_toggle(recipes["steak"]);
 		b.tileAt(1, 1).house_toggle().house.rotate().rotate();
 		b.tileAt(5, 4).house_toggle().house.rotate().rotate();
@@ -24,8 +24,8 @@ load_data().then(function(){
 		b.tileAt(2, 0).road_toggle();
 		b.tileAt(1, 2).road_toggle();
 		b.tileAt(1, 3).road_toggle();
-		b.tileAt(1, 5).road_toggle();
-		b.tileAt(2, 5).road_toggle();
+		b.tileAt(1, -1).road_toggle();
+		b.tileAt(2, -1).road_toggle();
 		b.tileAt(3, 3).road_toggle();
 		b.tileAt(3, 4).road_toggle();
 		b.tileAt(4, 3).road_toggle();
@@ -41,7 +41,7 @@ load_data().then(function(){
 		function animate(){
 			let fraction = (Date.now() - b.steptime_millis)/STEP_DURATION_MILLIS;
 			fraction = Math.max(0, fraction)
-			b.window.draw_visible(fraction);
+			b.gameWindow.draw_visible(fraction);
 			window.requestAnimationFrame(animate);
 		}
 		
@@ -49,7 +49,7 @@ load_data().then(function(){
 		
 		//used for scrolling through the view using arrow keys
 		setInterval(function() {
-			b.window.shift_step();
+			b.gameWindow.shift_step();
 		}, 14);
 		
 	});	

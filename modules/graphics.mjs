@@ -8,7 +8,7 @@ class GameWindow {
         this.board = board;
         this.canvas = document.getElementById("myCanvas");
         this.context = this.canvas.getContext("2d");
-        this.tile_size = 60;
+        this.tile_size = 70;
         this.shift = {
             x: this.tile_size * this.board.height * Math.SQRT1_2,
             y: 20
