@@ -120,7 +120,7 @@ class Interactable { //this should only be created as a Giver or a Taker.
     }
     prefers(hog, queue) {
         let my_hogs = queue.hogs_of(this).filter(f => f.holding === hog.holding);
-        if (my_hogs.length < this.max_interactions(hog.holding.name)) return true; //indicates that there was no competition
+        if (my_hogs.length < this.max_interactions(hog.holding)) return true; //indicates that there was no competition
         for (let competing_hog of my_hogs) {
             if (this.tile_preferences.indexOf(hog.tile) < this.tile_preferences.indexOf(competing_hog.tile)) {
                 return competing_hog;
@@ -234,7 +234,7 @@ class Castle extends Taker {
 
 class Berry_Bush extends Giver {
     resourceType() {
-        return new Resource('berry');
+        return 'berry';
     }
     baseResourceCount() {
         return 2;
@@ -269,7 +269,7 @@ class Berry_Bush extends Giver {
 
 class Tree extends Giver {
     resourceType() {
-        return new Resource("wood");
+        return "wood";
     }
     baseResourceCount() {
         return 1;
@@ -448,7 +448,7 @@ class ShopInput extends Taker {
         if (previous) {
 			holdlist = this.previous_holding;
 		}
-        return holdlist.filter(ing => ing.name === resource_type).length;
+        return holdlist.filter(ing => ing === resource_type).length;
     }
     craft() {
         for (let part of this.shop.recipe.input) {
@@ -458,7 +458,7 @@ class ShopInput extends Taker {
         }
     }
     removeHeld(resource_name) {
-        this.holding.splice(this.holding.findIndex(e => e.name === resource_name), 1);
+        this.holding.splice(this.holding.findIndex(e => e === resource_name), 1);
     }
     deconstruct() {
         this.shop.deconstruct()
@@ -532,7 +532,7 @@ class ShopOutput extends Giver {
         return 0
     };
     resourceType() {
-        return new Resource(this.shop.recipe.output[0]);
+        return this.shop.recipe.output[0];
     }
     craft() {
         this.resource_count = this.shop.recipe.output[1];
@@ -540,23 +540,6 @@ class ShopOutput extends Giver {
     deconstruct() {
         this.shop.deconstruct()
     };
-}
-
-// this is the interface to get graphics for a resource, mostly. The name of the resource is used elsewhere. This class should not exist.
-class Resource {
-    constructor(name) {
-        this.name = name;
-    }
-    get graphic() {
-		let graphic_id = "undefined_item";
-		if( ["berry","wood","steak","bread","perfume"].includes(this.name) ){
-			graphic_id = this.name;
-		}
-		return images[graphic_id];
-    }
-    toString() {
-        return this.name;
-    }
 }
 
 export {Matchmaker, Castle, Berry_Bush, Tree, Shop, ShopInput, ShopOutput, Giver};

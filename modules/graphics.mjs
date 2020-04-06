@@ -242,13 +242,12 @@ class GameWindow {
 		this.drawAt(hog.graphic, col, row, [-100,0,800,500]);
 		
         //draw any items we are moving
-		//NOTE TO SELF: get rid of the toString once resources are all strings.
 		ctx.translate(this.tile_width/4, 0);
         if (fraction <= 1 && hog.previous_holding) {
-			this.drawAt(images[hog.previous_holding.toString()], col, row,ITEM_SPRITE_DATA);
+			this.drawAt(images[hog.previous_holding], col, row,ITEM_SPRITE_DATA);
         }
         if (2 > fraction && fraction > 1 && hog.holding && !hog.gave_to && !hog.took_from) {
-			this.drawAt(images[hog.holding.toString()], col, row,ITEM_SPRITE_DATA);
+			this.drawAt(images[hog.holding], col, row,ITEM_SPRITE_DATA);
         }
         if (2 > fraction && fraction > 1 && hog.gave_to) {
             let from = {x:0,y:0};
@@ -258,7 +257,7 @@ class GameWindow {
             }
             let item_coords = this.hop_path(from, to, fraction - 1);
 			ctx.translate(item_coords.x,item_coords.y);
-			this.drawAt(images[hog.previous_holding.toString()], col, row,ITEM_SPRITE_DATA);
+			this.drawAt(images[hog.previous_holding], col, row,ITEM_SPRITE_DATA);
         }
         if (2 > fraction && fraction > 1 && hog.took_from) {
             let to = {x:0,y:0};
@@ -268,10 +267,10 @@ class GameWindow {
             }
             let item_coords = this.hop_path(from, to, fraction - 1);
 			ctx.translate(item_coords.x,item_coords.y);
-			this.drawAt(images[hog.holding.toString()], col, row,ITEM_SPRITE_DATA);
+			this.drawAt(images[hog.holding], col, row,ITEM_SPRITE_DATA);
         }
         if (fraction >= 2 && hog.holding) {
-			this.drawAt(images[hog.holding.toString()], col, row,ITEM_SPRITE_DATA);
+			this.drawAt(images[hog.holding], col, row,ITEM_SPRITE_DATA);
         }
 
         ctx.restore();
