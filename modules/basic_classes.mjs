@@ -176,6 +176,8 @@ class Board {
         return this.tiles[mod(x, this.width) + this.width * mod(y, this.height)];
     }
     step() {
+		this.craft_shops();
+		
         for (let hog of this.hogs) {
             hog.has_stepped = false;
             hog.hopped_from = false;
@@ -194,8 +196,6 @@ class Board {
 
         let matchmaker = new Matchmaker(this)
         matchmaker.match();
-
-        this.craft_shops();
 
         this.number_of_steps++;
     }
