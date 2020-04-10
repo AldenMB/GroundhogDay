@@ -1,0 +1,149 @@
+Junk             , good_junk           
+Food             , good_food           
+Wood             , good_wood           
+Water            , good_water          
+Stone            , good_stone          
+Barrel           , good_barrel         
+Oak              , good_oak            
+Bread            , good_bread          
+Bricks           , good_bricks         
+Spirits          , good_spirits        
+Lumber           , good_lumber         
+Perfume          , good_perfume        
+Polished Gems    , good_gems           
+Stew             , good_stew           
+Ore              , good_ore            
+Spices           , good_spices         
+Glass            , good_glass          
+Cooked Food      , good_cookedfood     
+Flour            , good_flour          
+Mana             , good_mana           
+Mulled Wine      , good_mulledwine     
+Shrines          , good_shrines        
+Potion of Death  , good_potionofdeath  
+Potion of Joy    , good_potionofjoy    
+Potion of Life   , good_potionoflife   
+Jewelry          , good_jewelry        
+Idols            , good_idols          
+Gunpowder        , good_gunpowder   
+Onyx             , good_onyx           
+Jade             , good_jade           
+Opal             , good_opal           
+Amber            , good_amber          
+Silver           , good_silver         
+Diamond          , good_diamond        
+Sapphire         , good_sapphire       
+Ruby             , good_ruby           
+Amethyst         , good_amethyst       
+Ring             , good_rings          
+Necklace         , good_necklace       
+Shield           , good_shields        
+Hammers          , good_hammers        
+Swords           , good_swords         
+Sceptre          , good_sceptre        
+Amulet           , good_amulet         
+Crowns           , good_crowns         
+Large Barrel     , good_largebarrel    
+Black Oak        , good_blackoak       
+Black Bread      , good_blackbread     
+Fired Bricks     , good_firedbricks    
+Whiskey          , good_whiskey        
+Chair            , good_chair          
+Jewelry Box      , good_jewelrybox     
+Desk             , good_desk           
+Incense          , good_incense        
+Rock Hammers     , good_rockhammers    
+Beer             , good_beer           
+Fruit Cake       , good_fruitcake      
+Cinnamon Rolls   , good_cinnamonrolls  
+Cat Statue       , good_catstatue      
+Metal Ingot      , good_metalingot     
+Curry            , good_curry          
+Chowder          , good_chowder        
+Grog             , good_grog           
+Chili            , good_chili          
+Windows          , good_windows        
+Spyglass         , good_spyglass       
+Fine Brandy      , good_finebrandy     
+Crockpot         , good_crockpot       
+Lembas Cakes     , good_lembascakes    
+Luxury Food      , good_luxuryfood     
+Glue             , good_glue           
+Fire Bread       , good_Firebread      
+Fine Flour       , good_FineFlour      
+Sweet Wine       , good_sweetwine      
+Rowboat          , good_rowboat        
+Hair Cream       , good_haircream      
+Fire Ring        , good_firering       
+Poison Ring      , good_poisonring     
+Stone Ring       , good_stonering      
+Fire Necklace    , good_firenecklace   
+Poison Necklace  , good_poisonnecklace 
+Stone Necklace   , good_stonenecklace  
+Crystal Shield   , good_crystalshield  
+Spirit Shield    , good_spiritshield   
+Stealth Shield   , good_stealthshield  
+Ice Barrel       , good_icebarrel      
+Black Lumber     , good_blacklumber    
+Sweet Bread      , good_sweetbread     
+Porcelain        , good_porcelain      
+Ice              , good_ice            
+Fine Lumber      , good_finelumber     
+Bread Pudding    , good_breadpudding   
+Pottery          , good_pottery        
+Stout Barrel     , good_stoutbarrel    
+Black Whiskey    , good_blackwhiskey   
+Iron Rations     , good_ironrations    
+Prayer Stones    , good_prayerstones   
+Stew Barrel      , good_stewbarrel     
+Death Powder     , good_deathpowder    
+Hearty Meal      , good_heartymeals    
+Flatbread        , good_flatbread      
+Dull Amulet      , good_dullamulet     
+Dull Sceptre     , good_dullsceptre    
+Dull Crown       , good_dullcrown      
+Potion of Undeath, good_potionofundeath
+Ceremonial Float , good_float          
+Wine of Death    , good_wineofdeath    
+Wine of Joy      , good_wineofjoy      
+Gunship          , good_gunship        
+Hair Elixir      , good_hairelixir     
+Glowing Amulet   , good_glowingamulet  
+Glowing Sceptre  , good_glowingsceptre 
+Glowing Crown    , good_glowingcrown   
+Shadow Amulet    , good_shadowamulet   
+Shadow Sceptre   , good_shadowsceptre  
+Shadow Crown     , good_shadowcrown    
+Ice Bust         , good_icebust        
+Wood Bust        , good_woodbust       
+Chocolate Bust   , good_chocolatebust  
+Porcelain Bust   , good_porcelainbust  
+Ice Statue       , good_icestatue      
+Wood Statue      , good_woodstatue     
+Chocolate Statue , good_chocolatestatue
+Porcelain Statue , good_porcelainstatue
+Mahna Mahna      , good_mahnamahna     
+Birthday Cake    , good_birthdaycake   
+Magic Buns       , good_magicbuns      
+Dull Earrings    , good_dullearrings   
+Glowing Earrings , good_glowingearrings
+Shadow Earrings  , good_shadowearrings 
+Earrings         , good_earrings       
+Glowing Shield   , good_glowingshield  
+Absinthe         , good_absinthe       
+Mana Orb         , good_manaorb        
+Sticky Buns      , good_stickybuns     
+Pink Flamingo    , good_pinkflamingo   
+Sundial          , good_sundial        
+Hammer of Time   , good_hammeroftime   
+Sparky Pants     , good_sparkypants    
+Dull Armor       , good_dullarmor      
+Glowing Armor    , good_glowingarmor   
+Shadow Armor     , good_shadowarmor    
+Bracelet         , good_bracelet       
+Statement Bangle , good_bangle         
+Arm Party        , good_armparty       
+Writ of Seduction, good_writofseduction
+Glowing Statue   , good_glowingstatue  
+Crowned Statue   , good_crownedstatue  
+Black Heart      , good_blackheart     
