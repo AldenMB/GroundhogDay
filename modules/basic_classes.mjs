@@ -216,9 +216,15 @@ class Board {
             }
         }
     }
+	empty_shops() {
+		for (let shop of this.shops) {
+			shop.input.craft();
+		}
+	}
     reset_day() {
         this.number_of_steps = 0;
         this.recall_hog();
+		this.empty_shops();
         this.replenish_givers();
     }
     update_step_display() {
