@@ -175,7 +175,7 @@ class GameWindow {
         }
     }
     hop_path(start, end, fraction) { //feed this objects with x and y
-        let jumpheight = 60;
+        let jumpheight = this.tile_height*2;
         let obj = {
             x: start.x * (1 - fraction) + end.x * fraction,
             y: start.y * (1 - fraction) + end.y * fraction - jumpheight * fraction * (1 - fraction)
