@@ -11,6 +11,11 @@ const STEP_DURATION_MILLIS = DAY_DURATION_MILLIS/STEPS_PER_DAY;
 load_data().then(function(){
 	$(document).ready( function() {
 		let b = new Board(10, 15);
+		let zoomslider = document.getElementById("zoom_select");
+		zoomslider.oninput = function(){
+			b.gameWindow.tile_size = this.value;
+		}
+		b.gameWindow.tile_size=zoomslider.value;
 
 		b.tileAt(-2, 1).interact_toggle(Castle);
 		b.tileAt(2, 2).shop_toggle(recipes["steak"]);

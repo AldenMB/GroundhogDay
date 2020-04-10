@@ -162,14 +162,14 @@ class GameWindow {
     do_everywhere_visible(myfun, fraction = 1) {
         let first_coords = this.skewed_position_inverse(0, 0);
         let num_cols = Math.ceil(this.canvas.width / this.tile_width),
-			num_rows = Math.ceil(this.canvas.height / this.tile_height);
+			num_rows = 1+Math.ceil(this.canvas.height / this.tile_height);
         for (let row = 0; row <= num_rows; row++) {
 			let x = first_coords.col + row,
 				y = first_coords.row - row;
-            for (let column = -1; column < num_cols; column++) {
+            for (let column = -1; column <= num_cols; column++) {
                 myfun.call(this, x + column, y + column + 1, fraction);
             }
-            for (let column = -1; column < num_cols; column++) {
+            for (let column = -1; column <= num_cols; column++) {
                 myfun.call(this, x + column, y + column, fraction);
             }
         }
