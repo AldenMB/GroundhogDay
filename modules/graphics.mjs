@@ -1,7 +1,7 @@
 import {ShopOutput} from './hog_interactions.mjs';
 import {images} from './load_data.mjs';
 
-const ITEM_SPRITE_DATA = [0,0,1000,500];
+const ITEM_SPRITE_DATA = [0,0,768,384];
 
 class GameWindow {
     constructor(board) {
@@ -122,7 +122,7 @@ class GameWindow {
         tile.on_click();
     }
     drawAt(graphic, col, row, spriteData = []) { //spriteData=[start_x,start_y,sprite_width,sprite_height]
-        this.context.drawImage(graphic,
+		this.context.drawImage(graphic,
             ...spriteData,
             this.skewed_position_x(col, row) - (this.tile_width / 2),
             this.skewed_position_y(col, row),
@@ -242,7 +242,7 @@ class GameWindow {
 		this.drawAt(hog.graphic, col, row, [-100,0,800,500]);
 		
         //draw any items we are moving
-		ctx.translate(this.tile_width/4, 0);
+		ctx.translate(this.tile_width/3,0); //controls position of goods on hog
         if (fraction <= 1 && hog.previous_holding) {
 			this.drawAt(images[hog.previous_holding], col, row,ITEM_SPRITE_DATA);
         }
@@ -279,7 +279,7 @@ class GameWindow {
         const shopOut = this.board.tileAt(x, y).interactable;
         if (!(shopOut instanceof ShopOutput)) return;
 
-        const horizontal_sep = this.tile_width / 4,
+        const horizontal_sep = this.tile_width / 3,
             vertical_sep = this.tile_height / 2,
             shop = shopOut.shop;
 
@@ -303,7 +303,7 @@ class GameWindow {
 		}
 		draw_list = draw_list.bind(this);
 		
-		ctx.translate(this.tile_width/6, 0);
+		ctx.translate(this.tile_width/3, 0);
 		
         ctx.save();
 		ctx.translate(0, -vertical_sep/2);
