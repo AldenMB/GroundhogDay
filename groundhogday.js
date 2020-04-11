@@ -7,6 +7,7 @@ import {load_data, recipes} from './modules/load_data.mjs';
 const DAY_DURATION_MILLIS = 60000;
 const STEPS_PER_DAY = 45;
 const STEP_DURATION_MILLIS = DAY_DURATION_MILLIS/STEPS_PER_DAY;
+const MAX_PLAYERS = 8;
 
 load_data().then(function(){
 	$(document).ready( function() {

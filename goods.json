@@ -1,0 +1,2406 @@
+{
+    "junk": {
+        "display_name": "Junk",
+        "base_value": 10,
+        "value_multiplier": 0.0,
+        "type": "basic",
+        "altar_type": "bakery",
+        "description": "Wrong ingredients in.  Junk come out.  If only you used the Recipedia...",
+        "recipe": []
+    },
+    "food": {
+        "display_name": "Food",
+        "base_value": 10,
+        "value_multiplier": 0.0,
+        "type": "basic",
+        "altar_type": "bakery",
+        "description": "A bulbous protein rich berry.  Clever monkeys can cook it into almost any yummy delicacy.",
+        "recipe": []
+    },
+    "wood": {
+        "display_name": "Wood",
+        "base_value": 15,
+        "value_multiplier": 0.0,
+        "type": "basic",
+        "altar_type": "bakery",
+        "description": "Once, the living trunk of a majestic tree.  Now dead.",
+        "recipe": []
+    },
+    "water": {
+        "display_name": "Water",
+        "base_value": 5,
+        "value_multiplier": 0.0,
+        "type": "basic",
+        "altar_type": "bakery",
+        "description": "Cool clear pond water.  Scum free!",
+        "recipe": []
+    },
+    "stone": {
+        "display_name": "Stone",
+        "base_value": 18,
+        "value_multiplier": 0.0,
+        "type": "basic",
+        "altar_type": "bakery",
+        "description": "Rough stone from a local mountain.",
+        "recipe": []
+    },
+    "barrel": {
+        "display_name": "Barrel",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "bakery",
+        "description": "Stout and full of water. You can shoot fish in it.",
+        "recipe": [
+            [
+                "water",
+                2
+            ]
+        ]
+    },
+    "oak": {
+        "display_name": "Oak",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "lumbermill",
+        "description": "A hard wood that has lived a hard life.  Misses its baby acorns.",
+        "recipe": [
+            [
+                "wood",
+                2
+            ]
+        ]
+    },
+    "bread": {
+        "display_name": "Bread",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "bakery",
+        "description": "Fresh, hot loafs right out of the oven.  Try slices dribbled with honey and melted butter.",
+        "recipe": [
+            [
+                "food",
+                2
+            ]
+        ]
+    },
+    "bricks": {
+        "display_name": "Bricks",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "quarry",
+        "description": "The finest red clay bricks this side of Greater Flandon.",
+        "recipe": [
+            [
+                "stone",
+                2
+            ]
+        ]
+    },
+    "spirits": {
+        "display_name": "Spirits",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "brewery",
+        "description": "Distilled berries yield a harsh liquor that puts hair in places you really don't want hair.",
+        "recipe": [
+            [
+                "water",
+                1
+            ],
+            [
+                "food",
+                1
+            ]
+        ]
+    },
+    "lumber": {
+        "display_name": "Lumber",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "lumbermill",
+        "description": "Planks hand-planed by an elderly master craftsman.  Each wood shaving is so fine you can see the sunset shine through.",
+        "recipe": [
+            [
+                "water",
+                1
+            ],
+            [
+                "wood",
+                1
+            ]
+        ]
+    },
+    "perfume": {
+        "display_name": "Perfume",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "chemistry",
+        "description": "Dab a little of this under your chin and the flan come runnin'",
+        "recipe": [
+            [
+                "food",
+                1
+            ],
+            [
+                "wood",
+                1
+            ]
+        ]
+    },
+    "gems": {
+        "display_name": "Polished Gems",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "Sparkly bits of glitter cut with a water wheel.",
+        "recipe": [
+            [
+                "stone",
+                1
+            ],
+            [
+                "water",
+                1
+            ]
+        ]
+    },
+    "stew": {
+        "display_name": "Stew",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "Savory stew made from roots, sausage and your mother's soupy secrets. The steam fogs your glasses.",
+        "recipe": [
+            [
+                "food",
+                1
+            ],
+            [
+                "lumber",
+                1
+            ]
+        ]
+    },
+    "ore": {
+        "display_name": "Ore",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "quarry",
+        "description": "Fractured stone under great heat reveals a metallic core. Ore! Go forth and forge a vast industry!",
+        "recipe": [
+            [
+                "wood",
+                1
+            ],
+            [
+                "stone",
+                1
+            ]
+        ]
+    },
+    "spices": {
+        "display_name": "Spices",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "The nubby petals, when ground in a Flannish mortar, produce a red powder that sets the senses aflame.",
+        "recipe": [
+            [
+                "stone",
+                1
+            ],
+            [
+                "food",
+                1
+            ]
+        ]
+    },
+    "glass": {
+        "display_name": "Glass",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "Twelve parts sand, three parts trona, two parts lime. Brought to a bubble and then made into church windows.",
+        "recipe": [
+            [
+                "water",
+                1
+            ],
+            [
+                "ore",
+                1
+            ]
+        ]
+    },
+    "cookedfood": {
+        "display_name": "Cooked Food",
+        "base_value": 0,
+        "value_multiplier": 1.8,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "The home cooked meal you miss so much.",
+        "recipe": [
+            [
+                "wood",
+                1
+            ],
+            [
+                "spices",
+                1
+            ]
+        ]
+    },
+    "flour": {
+        "display_name": "Flour",
+        "base_value": 0,
+        "value_multiplier": 1.8,
+        "type": "crafted",
+        "altar_type": "bakery",
+        "description": "A white fruit-based flour used for baking.  Also fun to jump into and pretend you are a ghost.",
+        "recipe": [
+            [
+                "stone",
+                1
+            ],
+            [
+                "spirits",
+                1
+            ]
+        ]
+    },
+    "mana": {
+        "display_name": "Mana",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "church",
+        "description": "Food of the gods.  The gods unfortunately were machines, so consuming mana tends to make one's tongue blister.",
+        "recipe": [
+            [
+                "perfume",
+                1
+            ],
+            [
+                "gems",
+                1
+            ]
+        ]
+    },
+    "mulledwine": {
+        "display_name": "Mulled Wine",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "bakery",
+        "description": "An intoxicating staple of winter nights spent with friends 'round a table full of food and song.",
+        "recipe": [
+            [
+                "spices",
+                1
+            ],
+            [
+                "spirits",
+                1
+            ]
+        ]
+    },
+    "shrines": {
+        "display_name": "Shrines",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "church",
+        "description": "Items of worship mass produced for mass.",
+        "recipe": [
+            [
+                "lumber",
+                1
+            ],
+            [
+                "spirits",
+                1
+            ]
+        ]
+    },
+    "potionofdeath": {
+        "display_name": "Potion of Death",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "chemistry",
+        "description": "A poisonous beverage favored by ex-lovers and spiteful goldfish owners.",
+        "recipe": [
+            [
+                "perfume",
+                1
+            ],
+            [
+                "ore",
+                1
+            ]
+        ]
+    },
+    "potionofjoy": {
+        "display_name": "Potion of Joy",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "chemistry",
+        "description": "Love in a bottle.  Sold in bulk to certified therapists.",
+        "recipe": [
+            [
+                "perfume",
+                1
+            ],
+            [
+                "spirits",
+                1
+            ]
+        ]
+    },
+    "potionoflife": {
+        "display_name": "Potion of Life",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "chemistry",
+        "description": "Each flask contains a guaranteed five additional minutes of life.  Drink slowly to avoid exploding.",
+        "recipe": [
+            [
+                "perfume",
+                1
+            ],
+            [
+                "spices",
+                1
+            ]
+        ]
+    },
+    "jewelry": {
+        "display_name": "Jewelry",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "These baubles cling to the curve of your breast.",
+        "recipe": [
+            [
+                "gems",
+                1
+            ],
+            [
+                "ore",
+                1
+            ]
+        ]
+    },
+    "idols": {
+        "display_name": "Idols",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "church",
+        "description": "Small statuettes that contain a false bottom for hiding sacrilegious items.",
+        "recipe": [
+            [
+                "spices",
+                1
+            ],
+            [
+                "lumber",
+                1
+            ]
+        ]
+    },
+    "gunpowder": {
+        "display_name": "Gunpowder",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "lab",
+        "description": "A black powder used in fireworks and other celebratory activities. Like the upcoming purge of the Queen's enemies.",
+        "recipe": [
+            [
+                "jewelry",
+                1
+            ],
+            [
+                "ore",
+                1
+            ]
+        ]
+    },
+    "onyx": {
+        "display_name": "Onyx",
+        "base_value": 40,
+        "value_multiplier": 0.0,
+        "type": "crystal",
+        "altar_type": "bakery",
+        "description": "A banded variety of chalcedony.  Ha! You are now smarter than your brother.",
+        "recipe": []
+    },
+    "jade": {
+        "display_name": "Jade",
+        "base_value": 40,
+        "value_multiplier": 0.0,
+        "type": "crystal",
+        "altar_type": "bakery",
+        "description": "A green stone that reminds this scholar of your aunt's eyes on that summer dawn.",
+        "recipe": []
+    },
+    "opal": {
+        "display_name": "Opal",
+        "base_value": 40,
+        "value_multiplier": 0.0,
+        "type": "crystal",
+        "altar_type": "bakery",
+        "description": "A shimmering gem of many colors.  This one happens to be of the rare non-Australian variety",
+        "recipe": []
+    },
+    "amber": {
+        "display_name": "Amber",
+        "base_value": 40,
+        "value_multiplier": 0.0,
+        "type": "crystal",
+        "altar_type": "bakery",
+        "description": "Fossilized sap. Occasionally pieces contain dead bugs and eternal memories.",
+        "recipe": []
+    },
+    "silver": {
+        "display_name": "Silver",
+        "base_value": 40,
+        "value_multiplier": 0.0,
+        "type": "crystal",
+        "altar_type": "bakery",
+        "description": "A metal that is deeply jealous of gold and all the love it gets.  Sometimes found crying itself to sleep.",
+        "recipe": []
+    },
+    "diamond": {
+        "display_name": "Diamond",
+        "base_value": 45,
+        "value_multiplier": 0.0,
+        "type": "crystal",
+        "altar_type": "bakery",
+        "description": "Diamonds are what happens when you squeeze a tree really tightly. Quite rare due to the Purge of the Tree Squeezers in 40 AD.",
+        "recipe": []
+    },
+    "sapphire": {
+        "display_name": "Sapphire",
+        "base_value": 50,
+        "value_multiplier": 0.0,
+        "type": "crystal",
+        "altar_type": "bakery",
+        "description": "A diamond dipped in blue dye",
+        "recipe": []
+    },
+    "ruby": {
+        "display_name": "Ruby",
+        "base_value": 60,
+        "value_multiplier": 0.0,
+        "type": "crystal",
+        "altar_type": "bakery",
+        "description": "Long ago jewelers sacrificed miniature goats to turn stones red. If you hold a ruby up to your ear, you just might be able to hear the bleating.",
+        "recipe": []
+    },
+    "amethyst": {
+        "display_name": "Amethyst",
+        "base_value": 40,
+        "value_multiplier": 0.0,
+        "type": "crystal",
+        "altar_type": "bakery",
+        "description": "No one likes amethyst.",
+        "recipe": []
+    },
+    "rings": {
+        "display_name": "Ring",
+        "base_value": 0,
+        "value_multiplier": 2.3,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "A band wrought of precious materials.  It speaks of a promise not always kept.",
+        "recipe": [
+            [
+                "crystal",
+                2
+            ]
+        ]
+    },
+    "necklace": {
+        "display_name": "Necklace",
+        "base_value": 0,
+        "value_multiplier": 3.0,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "Necklaces are armor that lay bare our humdrum visage when removed.  Invaluable.",
+        "recipe": [
+            [
+                "crystal",
+                3
+            ]
+        ]
+    },
+    "shields": {
+        "display_name": "Shield",
+        "base_value": 0,
+        "value_multiplier": 3.2,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "A polished shield perfect for hanging on walls in order to pretend that you are manly.",
+        "recipe": [
+            [
+                "crystal",
+                4
+            ]
+        ]
+    },
+    "hammers": {
+        "display_name": "Hammers",
+        "base_value": 0,
+        "value_multiplier": 3.6,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "Long of shaft and thick of head, these are not intended to be used on drums. The drum maker is very angry.",
+        "recipe": [
+            [
+                "crystal",
+                5
+            ]
+        ]
+    },
+    "swords": {
+        "display_name": "Swords",
+        "base_value": 0,
+        "value_multiplier": 3.6,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "Snicker snack!  A blade capable of severing a variety of cheeses and cutlets when one feels peckish.",
+        "recipe": [
+            [
+                "crystal",
+                6
+            ]
+        ]
+    },
+    "sceptre": {
+        "display_name": "Sceptre",
+        "base_value": 0,
+        "value_multiplier": 2.0,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "Princes collect scepters much as your or I might collect shoes.",
+        "recipe": [
+            [
+                "crystal",
+                7
+            ]
+        ]
+    },
+    "amulet": {
+        "display_name": "Amulet",
+        "base_value": 0,
+        "value_multiplier": 2.0,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "Protection from spirits and hauntings.  It never seems to work out as promised in the literature.",
+        "recipe": [
+            [
+                "crystal",
+                8
+            ]
+        ]
+    },
+    "crowns": {
+        "display_name": "Crowns",
+        "base_value": 0,
+        "value_multiplier": 2.0,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "The heavy burden of leadership built to rest upon a furrowed brow.",
+        "recipe": [
+            [
+                "crystal",
+                9
+            ]
+        ]
+    },
+    "largebarrel": {
+        "display_name": "Large Barrel",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "When a standard sized barrel just isn't enough.",
+        "recipe": [
+            [
+                "barrel",
+                2
+            ]
+        ]
+    },
+    "blackoak": {
+        "display_name": "Black Oak",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "lumbermill",
+        "description": "The oak preferred by pirates and brigands.",
+        "recipe": [
+            [
+                "oak",
+                2
+            ]
+        ]
+    },
+    "blackbread": {
+        "display_name": "Black Bread",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "bakery",
+        "description": "A dense loaf traditionally consumed by soaking in stout",
+        "recipe": [
+            [
+                "bread",
+                2
+            ]
+        ]
+    },
+    "firedbricks": {
+        "display_name": "Fired Bricks",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "quarry",
+        "description": "An upscale brick for rich folks that look down on red bricks as plebian.",
+        "recipe": [
+            [
+                "bricks",
+                2
+            ]
+        ]
+    },
+    "whiskey": {
+        "display_name": "Whiskey",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "brewery",
+        "description": "Aged to maturity in artisanal black oak barrels, a single sip will burn your socks off.",
+        "recipe": [
+            [
+                "barrel",
+                1
+            ],
+            [
+                "spirits",
+                1
+            ]
+        ]
+    },
+    "chair": {
+        "display_name": "Chair",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "lumbermill",
+        "description": "Have a seat.",
+        "recipe": [
+            [
+                "whiskey",
+                1
+            ],
+            [
+                "lumber",
+                1
+            ]
+        ]
+    },
+    "jewelrybox": {
+        "display_name": "Jewelry Box",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "The lock on the intricate box promises more than the costume jewelry.",
+        "recipe": [
+            [
+                "chair",
+                1
+            ],
+            [
+                "gems",
+                1
+            ]
+        ]
+    },
+    "desk": {
+        "display_name": "Desk",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "lumbermill",
+        "description": "This classic desk was popularized in the Elder Puddingham era.  No assembly required because flan are not (and never will be) Swedish.",
+        "recipe": [
+            [
+                "jewelrybox",
+                1
+            ],
+            [
+                "lumber",
+                1
+            ]
+        ]
+    },
+    "incense": {
+        "display_name": "Incense",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "chemistry",
+        "description": "Legalized in three states",
+        "recipe": [
+            [
+                "desk",
+                1
+            ],
+            [
+                "mulledwine",
+                1
+            ]
+        ]
+    },
+    "rockhammers": {
+        "display_name": "Rock Hammers",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "Hammer for bashing rock. Used by the workers to the east that lost their jobs and families to the illness with no cure.",
+        "recipe": [
+            [
+                "incense",
+                1
+            ],
+            [
+                "ore",
+                1
+            ]
+        ]
+    },
+    "beer": {
+        "display_name": "Beer",
+        "base_value": 0,
+        "value_multiplier": 1.8,
+        "type": "crafted",
+        "altar_type": "brewery",
+        "description": "A well hopped ale",
+        "recipe": [
+            [
+                "bread",
+                1
+            ],
+            [
+                "idols",
+                1
+            ]
+        ]
+    },
+    "fruitcake": {
+        "display_name": "Fruit Cake",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "bakery",
+        "description": "Sometimes we give bad gifts because we care too much to give fragile feeling form.",
+        "recipe": [
+            [
+                "bread",
+                1
+            ],
+            [
+                "perfume",
+                1
+            ]
+        ]
+    },
+    "cinnamonrolls": {
+        "display_name": "Cinnamon Rolls",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "bakery",
+        "description": "My fingers are so sticky. Are your fingers sticky too?  Even If you lick them, they don't stop being sticky.",
+        "recipe": [
+            [
+                "bread",
+                1
+            ],
+            [
+                "spices",
+                1
+            ]
+        ]
+    },
+    "catstatue": {
+        "display_name": "Cat Statue",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "quarry",
+        "description": "This was once a real cat, but then it was soaked in a special varnish. Now you can pet Fluffy forever.",
+        "recipe": [
+            [
+                "bricks",
+                1
+            ],
+            [
+                "gems",
+                1
+            ]
+        ]
+    },
+    "metalingot": {
+        "display_name": "Metal Ingot",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "The poor sell their fillings to be melted into ingots",
+        "recipe": [
+            [
+                "bricks",
+                1
+            ],
+            [
+                "ore",
+                1
+            ]
+        ]
+    },
+    "curry": {
+        "display_name": "Curry",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "'The only way to enjoy spicy food is on the way in' -Flannish proverb",
+        "recipe": [
+            [
+                "bricks",
+                1
+            ],
+            [
+                "spices",
+                1
+            ]
+        ]
+    },
+    "chowder": {
+        "display_name": "Chowder",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "This was the meal that the fisherman ate the night before he was lost at sea.",
+        "recipe": [
+            [
+                "stew",
+                1
+            ],
+            [
+                "lumber",
+                1
+            ]
+        ]
+    },
+    "grog": {
+        "display_name": "Grog",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "brewery",
+        "description": "A seafarer's concoction made of weak beer, rum and a dash of lemon to chase off the scurvy.",
+        "recipe": [
+            [
+                "stew",
+                1
+            ],
+            [
+                "spirits",
+                1
+            ]
+        ]
+    },
+    "chili": {
+        "display_name": "Chili",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "A hearty southern meal made from beans and locals that did not pay their royal taxes.",
+        "recipe": [
+            [
+                "stew",
+                1
+            ],
+            [
+                "curry",
+                1
+            ]
+        ]
+    },
+    "windows": {
+        "display_name": "Windows",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "lab",
+        "description": "An outdated product whose rudderless inventor is likely to go bankrupt in the next decade.",
+        "recipe": [
+            [
+                "glass",
+                1
+            ],
+            [
+                "catstatue",
+                1
+            ]
+        ]
+    },
+    "spyglass": {
+        "display_name": "Spyglass",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "lab",
+        "description": "In a well ordered society, it is a neighbor's duty to report unseemly details with great gusto.  The spyglass is merely a facilitator.",
+        "recipe": [
+            [
+                "windows",
+                1
+            ],
+            [
+                "gems",
+                1
+            ]
+        ]
+    },
+    "finebrandy": {
+        "display_name": "Fine Brandy",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "brewery",
+        "description": "Now that cigars are banned in public places, consumption of brandy has doubled.",
+        "recipe": [
+            [
+                "glass",
+                1
+            ],
+            [
+                "grog",
+                1
+            ]
+        ]
+    },
+    "crockpot": {
+        "display_name": "Crockpot",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "All good moments in life can be slowly stewed in a crockpot.  Lift the lid, inhale and remember everything.",
+        "recipe": [
+            [
+                "cookedfood",
+                1
+            ],
+            [
+                "chowder",
+                1
+            ]
+        ]
+    },
+    "lembascakes": {
+        "display_name": "Lembas Cakes",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "bakery",
+        "description": "An English crisp.",
+        "recipe": [
+            [
+                "cookedfood",
+                1
+            ],
+            [
+                "lumber",
+                1
+            ]
+        ]
+    },
+    "luxuryfood": {
+        "display_name": "Luxury Food",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "The sort of plated meal a well off bachelor orders when attempting to impress an ingenue",
+        "recipe": [
+            [
+                "cookedfood",
+                1
+            ],
+            [
+                "gems",
+                1
+            ]
+        ]
+    },
+    "glue": {
+        "display_name": "Glue",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "chemistry",
+        "description": "Sniffless and extremely capable of non-emotional bonding.",
+        "recipe": [
+            [
+                "flour",
+                1
+            ],
+            [
+                "lumber",
+                1
+            ]
+        ]
+    },
+    "Firebread": {
+        "display_name": "Fire Bread",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "bakery",
+        "description": "Baked by lighting a tiny fire inside a bread crust cavity.  Eaten by families on Saturday nights.",
+        "recipe": [
+            [
+                "flour",
+                1
+            ],
+            [
+                "chili",
+                1
+            ]
+        ]
+    },
+    "FineFlour": {
+        "display_name": "Fine Flour",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "bakery",
+        "description": "When cooking pastries only the silkiest baking flour will prevent the chef from smacking you and yelling 'Dolt!'",
+        "recipe": [
+            [
+                "flour",
+                1
+            ],
+            [
+                "ore",
+                1
+            ]
+        ]
+    },
+    "sweetwine": {
+        "display_name": "Sweet Wine",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "brewery",
+        "description": "Wine bewitched with the sweet tears of mispent youth.",
+        "recipe": [
+            [
+                "spices",
+                1
+            ],
+            [
+                "potionofjoy",
+                1
+            ]
+        ]
+    },
+    "rowboat": {
+        "display_name": "Rowboat",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "lumbermill",
+        "description": "'This stealthy rowboat is surprisingly useful if you need to get rid of a body.' Sales brochure, selling point #3.",
+        "recipe": [
+            [
+                "spyglass",
+                1
+            ],
+            [
+                "gunpowder",
+                1
+            ]
+        ]
+    },
+    "haircream": {
+        "display_name": "Hair Cream",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "chemistry",
+        "description": "The simple fact that you do not possess this amazing hair-styling product explains everything that has gone wrong with your life.",
+        "recipe": [
+            [
+                "gems",
+                1
+            ],
+            [
+                "potionofjoy",
+                1
+            ]
+        ]
+    },
+    "firering": {
+        "display_name": "Fire Ring",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "A ring of fire.  It burns, burns, burns.",
+        "recipe": [
+            [
+                "rings",
+                1
+            ],
+            [
+                "lembascakes",
+                1
+            ]
+        ]
+    },
+    "poisonring": {
+        "display_name": "Poison Ring",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "When slipped upon a finger, a single twist releases a venom that makes you appear dead for 12 hours.",
+        "recipe": [
+            [
+                "rings",
+                1
+            ],
+            [
+                "luxuryfood",
+                1
+            ]
+        ]
+    },
+    "stonering": {
+        "display_name": "Stone Ring",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "The sort of thing an insecure man wears in order to pretend that they aren't wearing jewelry.",
+        "recipe": [
+            [
+                "rings",
+                1
+            ],
+            [
+                "ore",
+                1
+            ]
+        ]
+    },
+    "firenecklace": {
+        "display_name": "Fire Necklace",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "Traditional dress of the high governors that stoke the fire tower flames.",
+        "recipe": [
+            [
+                "necklace",
+                1
+            ],
+            [
+                "Firebread",
+                1
+            ]
+        ]
+    },
+    "poisonnecklace": {
+        "display_name": "Poison Necklace",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "All you need to do is hug your victim.  Please observe that the needles face outward.",
+        "recipe": [
+            [
+                "necklace",
+                1
+            ],
+            [
+                "spirits",
+                1
+            ]
+        ]
+    },
+    "stonenecklace": {
+        "display_name": "Stone Necklace",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "Recommended fashion for thick necked individuals with sloping shoulders.",
+        "recipe": [
+            [
+                "necklace",
+                1
+            ],
+            [
+                "ore",
+                1
+            ]
+        ]
+    },
+    "crystalshield": {
+        "display_name": "Crystal Shield",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "A shield you can hide behind and still see where you are going.  Two handed",
+        "recipe": [
+            [
+                "shields",
+                1
+            ],
+            [
+                "glass",
+                1
+            ]
+        ]
+    },
+    "spiritshield": {
+        "display_name": "Spirit Shield",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "A shield imbued with expensive cantrips to block the ghost of your mother from seeing what you are doing with your life.",
+        "recipe": [
+            [
+                "shields",
+                1
+            ],
+            [
+                "stew",
+                1
+            ]
+        ]
+    },
+    "stealthshield": {
+        "display_name": "Stealth Shield",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "This shield doesn't clank about like all the other shields.  Stupid clanking shields.",
+        "recipe": [
+            [
+                "shields",
+                1
+            ],
+            [
+                "flour",
+                1
+            ]
+        ]
+    },
+    "icebarrel": {
+        "display_name": "Ice Barrel",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "Don't limit yourself to a simple ice bucket.  You are better than that.",
+        "recipe": [
+            [
+                "largebarrel",
+                2
+            ]
+        ]
+    },
+    "blacklumber": {
+        "display_name": "Black Lumber",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "lumbermill",
+        "description": "Grows in graveyards",
+        "recipe": [
+            [
+                "blackoak",
+                2
+            ]
+        ]
+    },
+    "sweetbread": {
+        "display_name": "Sweet Bread",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "bakery",
+        "description": "Not actually bread.  And if it is indeed sweet, you picked a bad one.",
+        "recipe": [
+            [
+                "blackbread",
+                2
+            ]
+        ]
+    },
+    "porcelain": {
+        "display_name": "Porcelain",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "quarry",
+        "description": "An essential religious altar during those fuzzy college years.",
+        "recipe": [
+            [
+                "firedbricks",
+                2
+            ]
+        ]
+    },
+    "ice": {
+        "display_name": "Ice",
+        "base_value": 0,
+        "value_multiplier": 1.6,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "A little bundle of chilled evil.  Don't let it escape.",
+        "recipe": [
+            [
+                "icebarrel",
+                2
+            ]
+        ]
+    },
+    "finelumber": {
+        "display_name": "Fine Lumber",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "lumbermill",
+        "description": "Those with a friend who is into carpentry, should give this as a present",
+        "recipe": [
+            [
+                "blacklumber",
+                2
+            ]
+        ]
+    },
+    "breadpudding": {
+        "display_name": "Bread Pudding",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "bakery",
+        "description": "Behold. Light cream drizzled over warm breadpudding.  Heaven awaits.",
+        "recipe": [
+            [
+                "sweetbread",
+                2
+            ]
+        ]
+    },
+    "pottery": {
+        "display_name": "Pottery",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "quarry",
+        "description": "A child, age 5, broke the last one.  Replica pottery ensures that his step-father will never find out.",
+        "recipe": [
+            [
+                "porcelain",
+                2
+            ]
+        ]
+    },
+    "stoutbarrel": {
+        "display_name": "Stout Barrel",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "This barrel prefers the term 'stout'  over diminutive titles like 'tiny' or 'dwarven'",
+        "recipe": [
+            [
+                "largebarrel",
+                1
+            ],
+            [
+                "lumber",
+                1
+            ]
+        ]
+    },
+    "blackwhiskey": {
+        "display_name": "Black Whiskey",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "brewery",
+        "description": "Duke Elba sold his soul to the Ice Witch for one stiff drink. This is what he quaffed.",
+        "recipe": [
+            [
+                "blackoak",
+                1
+            ],
+            [
+                "spirits",
+                1
+            ]
+        ]
+    },
+    "ironrations": {
+        "display_name": "Iron Rations",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "The last warriors of the Flannish took these rations on their suicide mission to vanquish the spirit lords.  There are no more warrior flan.",
+        "recipe": [
+            [
+                "FineFlour",
+                1
+            ],
+            [
+                "ore",
+                1
+            ]
+        ]
+    },
+    "prayerstones": {
+        "display_name": "Prayer Stones",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "church",
+        "description": "Yes, these prayer stones are made of foam, but it is certified blessed foam.",
+        "recipe": [
+            [
+                "firedbricks",
+                1
+            ],
+            [
+                "stonering",
+                1
+            ]
+        ]
+    },
+    "stewbarrel": {
+        "display_name": "Stew Barrel",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "This is what happens when you cook a barrel of monkeys",
+        "recipe": [
+            [
+                "stoutbarrel",
+                1
+            ],
+            [
+                "stew",
+                1
+            ]
+        ]
+    },
+    "deathpowder": {
+        "display_name": "Death Powder",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "chemistry",
+        "description": "Produced by crushing dried mushrooms into powder.  A single pinch can aphyxiate a room.",
+        "recipe": [
+            [
+                "blackoak",
+                1
+            ],
+            [
+                "poisonring",
+                1
+            ]
+        ]
+    },
+    "heartymeals": {
+        "display_name": "Hearty Meal",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "A meal for flan that require two seats when traveling coach.",
+        "recipe": [
+            [
+                "ironrations",
+                1
+            ],
+            [
+                "stewbarrel",
+                1
+            ]
+        ]
+    },
+    "flatbread": {
+        "display_name": "Flatbread",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "bakery",
+        "description": "The famous chef Rotoschooni made this dish for the Princess when he first cooked for her.  They eloped that night.",
+        "recipe": [
+            [
+                "crockpot",
+                1
+            ],
+            [
+                "heartymeals",
+                1
+            ]
+        ]
+    },
+    "dullamulet": {
+        "display_name": "Dull Amulet",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "An amulet for the flan that does not need to flaunt their immense wealth.",
+        "recipe": [
+            [
+                "firenecklace",
+                1
+            ],
+            [
+                "metalingot",
+                1
+            ]
+        ]
+    },
+    "dullsceptre": {
+        "display_name": "Dull Sceptre",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "On the backside of this nondescript scepter is a spout that dispenses black whiskey.",
+        "recipe": [
+            [
+                "poisonnecklace",
+                1
+            ],
+            [
+                "beer",
+                1
+            ]
+        ]
+    },
+    "dullcrown": {
+        "display_name": "Dull Crown",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "The dour workers of the stony west fear reflections so they scuff their metal and break all foreign mirrors.",
+        "recipe": [
+            [
+                "stonenecklace",
+                1
+            ],
+            [
+                "rockhammers",
+                1
+            ]
+        ]
+    },
+    "potionofundeath": {
+        "display_name": "Potion of Undeath",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "chemistry",
+        "description": "Ha!  Juliet so wished she had this in that fine scene.",
+        "recipe": [
+            [
+                "potionoflife",
+                1
+            ],
+            [
+                "potionofdeath",
+                1
+            ]
+        ]
+    },
+    "float": {
+        "display_name": "Ceremonial Float",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "lab",
+        "description": "Carry on.  Nothing to see here.",
+        "recipe": [
+            [
+                "idols",
+                1
+            ],
+            [
+                "shrines",
+                1
+            ]
+        ]
+    },
+    "wineofdeath": {
+        "display_name": "Wine of Death",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "brewery",
+        "description": "The distributor doesn't understand why this product sells so poorly.",
+        "recipe": [
+            [
+                "mulledwine",
+                1
+            ],
+            [
+                "deathpowder",
+                1
+            ]
+        ]
+    },
+    "wineofjoy": {
+        "display_name": "Wine of Joy",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "brewery",
+        "description": "Actual just standard wine, but the packaging sells it.",
+        "recipe": [
+            [
+                "potionofjoy",
+                1
+            ],
+            [
+                "sweetwine",
+                1
+            ]
+        ]
+    },
+    "gunship": {
+        "display_name": "Gunship",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "Row, row, row your boat...BGOM!  Cannonball.",
+        "recipe": [
+            [
+                "gunpowder",
+                1
+            ],
+            [
+                "rowboat",
+                1
+            ]
+        ]
+    },
+    "hairelixir": {
+        "display_name": "Hair Elixir",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "chemistry",
+        "description": "You can put this on your tongue and pretend you have a beard.",
+        "recipe": [
+            [
+                "blackwhiskey",
+                1
+            ],
+            [
+                "haircream",
+                1
+            ]
+        ]
+    },
+    "glowingamulet": {
+        "display_name": "Glowing Amulet",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "lab",
+        "description": "The reverse of this pendant states 'In times of need, seek the glow of friends'",
+        "recipe": [
+            [
+                "crystalshield",
+                1
+            ],
+            [
+                "potionofundeath",
+                1
+            ]
+        ]
+    },
+    "glowingsceptre": {
+        "display_name": "Glowing Sceptre",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "lab",
+        "description": "An inscription on the side of the scepter reads 'By working together, greatness is inevitable'",
+        "recipe": [
+            [
+                "spiritshield",
+                1
+            ],
+            [
+                "float",
+                1
+            ]
+        ]
+    },
+    "glowingcrown": {
+        "display_name": "Glowing Crown",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "lab",
+        "description": "Glowing words ring the band, spelling out 'Alone, you are nothing.'",
+        "recipe": [
+            [
+                "stealthshield",
+                1
+            ],
+            [
+                "wineofdeath",
+                1
+            ]
+        ]
+    },
+    "shadowamulet": {
+        "display_name": "Shadow Amulet",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "Minions sworn to the creeping ice wear such amulet to keep the heat of love at bay.",
+        "recipe": [
+            [
+                "crystalshield",
+                1
+            ],
+            [
+                "wineofjoy",
+                1
+            ]
+        ]
+    },
+    "shadowsceptre": {
+        "display_name": "Shadow Sceptre",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "The first of the ice lords created this vile device from an inky pool of bitterness.",
+        "recipe": [
+            [
+                "spiritshield",
+                1
+            ],
+            [
+                "gunship",
+                1
+            ]
+        ]
+    },
+    "shadowcrown": {
+        "display_name": "Shadow Crown",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "If you ever stumble upon a shadow crown, burn it with fire.  The world hangs in balance.",
+        "recipe": [
+            [
+                "stealthshield",
+                1
+            ],
+            [
+                "hairelixir",
+                1
+            ]
+        ]
+    },
+    "icebust": {
+        "display_name": "Ice Bust",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "Mrs. Thatcher, is that you?",
+        "recipe": [
+            [
+                "ice",
+                2
+            ]
+        ]
+    },
+    "woodbust": {
+        "display_name": "Wood Bust",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "lumbermill",
+        "description": "Even the teeth are wood. Wait! Those are my teeth!",
+        "recipe": [
+            [
+                "finelumber",
+                2
+            ]
+        ]
+    },
+    "chocolatebust": {
+        "display_name": "Chocolate Bust",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "Better than a bunny",
+        "recipe": [
+            [
+                "breadpudding",
+                2
+            ]
+        ]
+    },
+    "porcelainbust": {
+        "display_name": "Porcelain Bust",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "quarry",
+        "description": "When you grow older, you'll collect a full glass case of these.",
+        "recipe": [
+            [
+                "pottery",
+                2
+            ]
+        ]
+    },
+    "icestatue": {
+        "display_name": "Ice Statue",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "Amelia Plumson, an artist of great renown, died. Her last wish was to send a last message.  This melting statue was found on her daughter's doorstep.",
+        "recipe": [
+            [
+                "icebust",
+                2
+            ]
+        ]
+    },
+    "woodstatue": {
+        "display_name": "Wood Statue",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "lumbermill",
+        "description": "The sculptor of this carving was inspired by a time when he was lost in the subway.  A lady with ladybug boots gave him an apple and led him home.",
+        "recipe": [
+            [
+                "woodbust",
+                2
+            ]
+        ]
+    },
+    "chocolatestatue": {
+        "display_name": "Chocolate Statue",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "restaurant",
+        "description": "All good things are made of chocolate.",
+        "recipe": [
+            [
+                "chocolatebust",
+                2
+            ]
+        ]
+    },
+    "porcelainstatue": {
+        "display_name": "Porcelain Statue",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "quarry",
+        "description": "The nation came together to create this great work.  The pride you feel comes from the bonds you built.",
+        "recipe": [
+            [
+                "porcelainbust",
+                2
+            ]
+        ]
+    },
+    "mahnamahna": {
+        "display_name": "Mahna Mahna",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "Two twooo two two two",
+        "recipe": [
+            [
+                "mana",
+                2
+            ]
+        ]
+    },
+    "birthdaycake": {
+        "display_name": "Birthday Cake",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "bakery",
+        "description": "Another year, another cake, another tube of toothpaste.",
+        "recipe": [
+            [
+                "flatbread",
+                1
+            ],
+            [
+                "fruitcake",
+                1
+            ]
+        ]
+    },
+    "magicbuns": {
+        "display_name": "Magic Buns",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "bakery",
+        "description": "Magic Buns.  You just wanna squeeze 'em.",
+        "recipe": [
+            [
+                "mana",
+                1
+            ],
+            [
+                "cinnamonrolls",
+                1
+            ]
+        ]
+    },
+    "dullearrings": {
+        "display_name": "Dull Earrings",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "Made of lead.  Proudly sold in America",
+        "recipe": [
+            [
+                "dullamulet",
+                1
+            ],
+            [
+                "dullsceptre",
+                1
+            ]
+        ]
+    },
+    "glowingearrings": {
+        "display_name": "Glowing Earrings",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "lab",
+        "description": "There is a small switch in the back that makes these blink.  SOS!",
+        "recipe": [
+            [
+                "glowingamulet",
+                1
+            ],
+            [
+                "glowingsceptre",
+                1
+            ]
+        ]
+    },
+    "shadowearrings": {
+        "display_name": "Shadow Earrings",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "If you wear your hair down, no one will see these.  Your little secret.  That and the location of the bloody ax.",
+        "recipe": [
+            [
+                "shadowamulet",
+                1
+            ],
+            [
+                "shadowsceptre",
+                1
+            ]
+        ]
+    },
+    "earrings": {
+        "display_name": "Earrings",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "Rings for your ears.",
+        "recipe": [
+            [
+                "rings",
+                2
+            ]
+        ]
+    },
+    "glowingshield": {
+        "display_name": "Glowing Shield",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "lab",
+        "description": "Friends shield us from loneliness like children shield politicians",
+        "recipe": [
+            [
+                "crystalshield",
+                1
+            ],
+            [
+                "mahnamahna",
+                1
+            ]
+        ]
+    },
+    "absinthe": {
+        "display_name": "Absinthe",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "brewery",
+        "description": "No one knows the secret hallucinagenic ingredients of this madman's liquor.",
+        "recipe": [
+            [
+                "finebrandy",
+                1
+            ],
+            [
+                "birthdaycake",
+                1
+            ]
+        ]
+    },
+    "manaorb": {
+        "display_name": "Mana Orb",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "church",
+        "description": "Looks great on a lawn",
+        "recipe": [
+            [
+                "mahnamahna",
+                2
+            ]
+        ]
+    },
+    "stickybuns": {
+        "display_name": "Sticky Buns",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "bakery",
+        "description": "If children eat this treat with their fingers, they gain the magical ability to climb walls. While giggling maniacly.",
+        "recipe": [
+            [
+                "glue",
+                1
+            ],
+            [
+                "magicbuns",
+                1
+            ]
+        ]
+    },
+    "pinkflamingo": {
+        "display_name": "Pink Flamingo",
+        "base_value": 0,
+        "value_multiplier": 1.2,
+        "type": "crafted",
+        "altar_type": "lab",
+        "description": "Looks so much better than a mana orb.  Dear neighbor, \"How about them apples?\"",
+        "recipe": [
+            [
+                "absinthe",
+                1
+            ],
+            [
+                "manaorb",
+                1
+            ]
+        ]
+    },
+    "sundial": {
+        "display_name": "Sundial",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "Time, like a rampaging herd of wild stallions, leaves behind an amazing quantity of poop.",
+        "recipe": [
+            [
+                "firering",
+                1
+            ],
+            [
+                "prayerstones",
+                1
+            ]
+        ]
+    },
+    "hammeroftime": {
+        "display_name": "Hammer of Time",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "Stop. Hammered by time. Break me down.",
+        "recipe": [
+            [
+                "hammers",
+                1
+            ],
+            [
+                "sundial",
+                1
+            ]
+        ]
+    },
+    "sparkypants": {
+        "display_name": "Sparky Pants",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "If you must one day put on some pants...make them sparky pants",
+        "recipe": [
+            [
+                "hammeroftime",
+                1
+            ],
+            [
+                "hammers",
+                1
+            ]
+        ]
+    },
+    "dullarmor": {
+        "display_name": "Dull Armor",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "Hide from the world inside this tiny dull space.  No one can poke you now.",
+        "recipe": [
+            [
+                "dullearrings",
+                1
+            ],
+            [
+                "dullcrown",
+                1
+            ]
+        ]
+    },
+    "glowingarmor": {
+        "display_name": "Glowing Armor",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "lab",
+        "description": "Every person who loves you (or your luxuriant hair) decreases your AC by 1.",
+        "recipe": [
+            [
+                "glowingearrings",
+                1
+            ],
+            [
+                "glowingcrown",
+                1
+            ]
+        ]
+    },
+    "shadowarmor": {
+        "display_name": "Shadow Armor",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "This is the stuff that makes evil robots impervious to bullets.",
+        "recipe": [
+            [
+                "shadowearrings",
+                1
+            ],
+            [
+                "shadowcrown",
+                1
+            ]
+        ]
+    },
+    "bracelet": {
+        "display_name": "Bracelet",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "Elegance is a small band that accents the sweet bones of the youthful wrist.",
+        "recipe": [
+            [
+                "earrings",
+                2
+            ]
+        ]
+    },
+    "bangle": {
+        "display_name": "Statement Bangle",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "A large rigid bracelet with Egyptian markings",
+        "recipe": [
+            [
+                "bracelet",
+                2
+            ]
+        ]
+    },
+    "armparty": {
+        "display_name": "Arm Party",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "jewelry",
+        "description": "Past a certain age, it is wise to trade elegance for \"Hey, stop looking at my wrinkles.\"",
+        "recipe": [
+            [
+                "bangle",
+                2
+            ]
+        ]
+    },
+    "writofseduction": {
+        "display_name": "Writ of Seduction",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "forge",
+        "description": "A warrior of modern romance knows that the True Love sometimes needs a small kick forward.",
+        "recipe": [
+            [
+                "armparty",
+                1
+            ],
+            [
+                "stickybuns",
+                1
+            ]
+        ]
+    },
+    "glowingstatue": {
+        "display_name": "Glowing Statue",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "lab",
+        "description": "My loved one died.  Please remember her.",
+        "recipe": [
+            [
+                "icestatue",
+                1
+            ],
+            [
+                "glowingamulet",
+                1
+            ]
+        ]
+    },
+    "crownedstatue": {
+        "display_name": "Crowned Statue",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "quarry",
+        "description": "The carved crown was so stunning that his people remembered him as a hero, not a drunk.",
+        "recipe": [
+            [
+                "woodstatue",
+                1
+            ],
+            [
+                "glowingcrown",
+                1
+            ]
+        ]
+    },
+    "blackheart": {
+        "display_name": "Black Heart",
+        "base_value": 0,
+        "value_multiplier": 1.5,
+        "type": "crafted",
+        "altar_type": "lab",
+        "description": "The shriveled heart of a flan that did not play nicely with others",
+        "recipe": [
+            [
+                "crownedstatue",
+                1
+            ],
+            [
+                "shadowarmor",
+                1
+            ]
+        ]
+    }
+}
