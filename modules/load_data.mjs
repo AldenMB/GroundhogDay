@@ -32,7 +32,7 @@ function get_images(){
 				Object.entries(image_index).map(([name,url]) => [name, url_to_image(url)])
 			);
 			let images_from_goods = Object.fromEntries(
-				Object.entries(goods).map(([name, __]) => [name, url_to_image('images/goods/'+name+'.png')])
+				Object.keys(goods).map(name => [name, url_to_image('images/goods/'+name+'.png')])
 			);
 			images = Object.freeze(Object.assign(images_from_index, images_from_goods));
 		});
