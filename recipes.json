@@ -2,7 +2,7 @@
   "bread": {
     "input": [
       [
-        "berry",
+        "food",
         1
       ]
     ],
@@ -14,7 +14,7 @@
   "perfume": {
     "input": [
       [
-        "berry",
+        "food",
         1
       ],
       [
@@ -30,7 +30,7 @@
   "steak": {
     "input": [
       [
-        "berry",
+        "food",
         1
       ],
       [

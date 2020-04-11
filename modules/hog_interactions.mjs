@@ -1,6 +1,7 @@
 import {mod} from './utilities.mjs';
 import {Hog} from './basic_classes.mjs';
 import {images} from './load_data.mjs';
+/*import {Good} from './goods.mjs';*/
 
 
 function rotateMatrix(matrix) { //rotates a matrix counter-clockwise
@@ -231,7 +232,7 @@ class Castle extends Taker {
 
 class Berry_Bush extends Giver {
     resourceType() {
-        return 'berry';
+        return 'food';
     }
     baseResourceCount() {
         return 2;

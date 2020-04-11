@@ -1,4 +1,4 @@
-import {goods} from './load_data.mjs';
+import {goods, images} from './load_data.mjs';
 
 function aggregate_arrays(...args){
 	return args.reduce( 
@@ -20,6 +20,12 @@ class Good {
 	get recipe() {
 		return recipes[this.name];
 	}
+	get graphic() {
+		return images[this.name];
+	}
+	get spriteData(){
+		return [0,0,768,384];
+	}
 }
 
 /*
@@ -31,3 +37,5 @@ make sure each recipe implements:
 		value_multiplier:
 	}
 */
+
+export {Good};
