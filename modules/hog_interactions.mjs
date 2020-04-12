@@ -68,7 +68,7 @@ function consult_next(hogs, type, queue) {
 	function rank(h) {
 		return target.tile_preferences.indexOf(h.tile);
 	}	
-	competing_hogs.sort((a,b) => a-b);
+	competing_hogs.sort((a,b) => rank(a)-rank(b));
 	let disfavored_hog = competing_hogs.pop();
 	hogs.push(disfavored_hog);
 	queue.remove_pair(disfavored_hog, target);
