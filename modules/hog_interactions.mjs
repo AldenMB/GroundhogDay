@@ -65,7 +65,10 @@ function consult_next(hogs, type, queue) {
 	//no room! put hog on the queue, then boot the lowest ranked one.
 	queue.add_pair(hog, target);
 	competing_hogs.push(hog);
-	competing_hogs.sort(h => target.tile_preferences.indexOf(h.tile));
+	function rank(h) {
+		return target.tile_preferences.indexOf(h.tile);
+	}	
+	competing_hogs.sort((a,b) => a-b);
 	let disfavored_hog = competing_hogs.pop();
 	hogs.push(disfavored_hog);
 	queue.remove_pair(disfavored_hog, target);
