@@ -13,9 +13,9 @@ load_data().then(function(){
 		let b = new Board(10, 15);
 		let zoomslider = document.getElementById("zoom_select");
 		zoomslider.oninput = function(){
-			b.gameWindow.tile_size = this.value;
+			b.gameWindow.zoom_to_percent(this.value);
 		}
-		b.gameWindow.tile_size=zoomslider.value;
+		b.gameWindow.zoom_to_percent(zoomslider.value);
 		let recipeselect = document.getElementById("recipe");
 		for(let recipe of Object.keys(goods)){
 			let option = document.createElement("option");

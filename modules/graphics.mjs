@@ -41,6 +41,15 @@ class GameWindow {
         this.shift.x += this.shift_speed.x;
         this.shift.y += this.shift_speed.y;
     }
+	zoom_to_percent(level) {
+		let oldcenter = this.skewed_position_inverse_unrounded(this.canvas.width/2, this.canvas.height/2);
+		this.tile_size = Math.log10(110-level)*100-60;
+		let newcenter = this.skewed_position_inverse_unrounded(this.canvas.width/2, this.canvas.height/2);
+		let differencecol = oldcenter.col-newcenter.col,
+			differencerow = oldcenter.row-newcenter.row;
+		this.shift.x -= (differencecol+differencerow)*this.tile_width/2;
+		this.shift.y -= (differencecol-differencerow)*this.tile_height/2;
+	}
 	
 	//PRIVATE
 	
@@ -143,14 +152,18 @@ class GameWindow {
     skewed_position_y(col, row) {
         return this.shift.y + this.tile_height/2 * (col - row + this.board.height - 1);
     }
-    skewed_position_inverse(x, y) {
-        let scaledx = (x - this.shift.x)/this.tile_width,
+	skewed_position_inverse_unrounded(x, y){
+		let scaledx = (x - this.shift.x)/this.tile_width,
 			scaledy = (y - this.shift.y)/this.tile_height,
 			obj = {
-            col: Math.floor(scaledx + scaledy),
-            row: Math.floor(scaledx - scaledy +this.board.height)
+            col: scaledx + scaledy,
+            row: scaledx - scaledy +this.board.height
         };
         return obj;
+	}
+    skewed_position_inverse(x, y) {
+        let unrounded = this.skewed_position_inverse_unrounded(x, y);
+		return {col:Math.floor(unrounded.col), row:Math.floor(unrounded.row)};
     }
     tileAtClick(x, y) { //feed me mouse coordinates
         let reduced_coords = this.skewed_position_inverse(x, y);
