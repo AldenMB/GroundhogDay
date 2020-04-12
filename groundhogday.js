@@ -2,12 +2,11 @@
 
 import {Board} from './modules/basic_classes.mjs';
 import {Castle, Berry_Bush, Tree} from './modules/hog_interactions.mjs';
-import {load_data, recipes} from './modules/load_data.mjs';
+import {load_data} from './modules/load_data.mjs';
 
 const DAY_DURATION_MILLIS = 60000;
 const STEPS_PER_DAY = 45;
 const STEP_DURATION_MILLIS = DAY_DURATION_MILLIS/STEPS_PER_DAY;
-const MAX_PLAYERS = 8;
 
 load_data().then(function(){
 	$(document).ready( function() {
@@ -19,7 +18,7 @@ load_data().then(function(){
 		b.gameWindow.tile_size=zoomslider.value;
 
 		b.tileAt(-2, 1).interact_toggle(Castle);
-		b.tileAt(2, 2).shop_toggle(recipes["steak"]);
+		b.tileAt(2, 2).shop_toggle("perfume");
 		b.tileAt(1, 1).house_toggle().house.rotate().rotate();
 		b.tileAt(5, 4).house_toggle().house.rotate().rotate();
 		b.tileAt(0, 3).house_toggle().house.rotate();

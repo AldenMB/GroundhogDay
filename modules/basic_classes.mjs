@@ -1,7 +1,7 @@
 import {GameWindow} from './graphics.mjs';
-import {Matchmaker, Castle, Berry_Bush, Tree, Shop, ShopInput, ShopOutput, Giver} from './hog_interactions.mjs';
+import {match_interactions, Castle, Berry_Bush, Tree, Shop, ShopInput, ShopOutput, Giver} from './hog_interactions.mjs';
 import {mod, ARROWS} from './utilities.mjs';
-import {recipes, images} from './load_data.mjs';
+import {images} from './load_data.mjs';
 
 class Tile {
     constructor(board, x, y, floor = '') {
@@ -89,7 +89,7 @@ class Tile {
                 this.interact_toggle(Berry_Bush);
                 break;
             case "shop_toggle":
-                this.shop_toggle(recipes[document.getElementById("recipe_select").elements.recipe_radio.value]);
+                this.shop_toggle(document.getElementById("recipe_select").elements.recipe_radio.value);
                 break;
             case "shop_rotate":
                 if (this.interactable instanceof ShopInput || this.interactable instanceof ShopOutput) this.interactable.shop.rotate();
@@ -161,12 +161,15 @@ class Board {
         }
         return array;
     }
-    get shops() {
+    get interactables() {
+		return this.tiles.filter(tile => tile.interactable).map(tile => tile.interactable);
+	}
+	get shops() {
         let shops = [];
-        for (let tile of this.tiles) {
-            if (tile.interactable instanceof ShopInput || tile.interactable instanceof ShopOutput) {
-                if (!shops.includes(tile.interactable.shop)) {
-                    shops.push(tile.interactable.shop);
+        for (let interactable of this.interactables) {
+            if (interactable instanceof ShopInput || interactable instanceof ShopOutput) {
+                if (!shops.includes(interactable.shop)) {
+                    shops.push(interactable.shop);
                 }
             }
         }
@@ -194,8 +197,7 @@ class Board {
             hog.step();
         };
 
-        let matchmaker = new Matchmaker(this)
-        matchmaker.match();
+        match_interactions(this);
 
         this.number_of_steps++;
     }
@@ -218,7 +220,8 @@ class Board {
     }
 	empty_shops() {
 		for (let shop of this.shops) {
-			shop.input.craft();
+			shop.input.holding = [];
+			shop.input.previous_holding = [];
 		}
 	}
     reset_day() {
@@ -501,10 +504,8 @@ class House {
         this.tile.house = this;
     }
     recall_hog() {
-        this.hog.move_to(this.tile, this.direction);
-        this.hog.holding = false;
-        this.hog.gave_to = false;
-        this.hog.took_from = false;
+		this.hog.deconstruct();
+		this.hog = new Hog(this.tile, this.direction);
         this.tile.board.is_changed = true;
     }
     deconstruct() {

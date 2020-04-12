@@ -1,5 +1,4 @@
 let goods = {},
-	recipes = {},
 	images = {};
 
 function get_goods(){
@@ -9,16 +8,6 @@ function get_goods(){
 		})
 		.then((data) => {
 			goods = Object.freeze(data);
-		});
-}
-
-function get_recipes(){
-	return fetch('./recipes.json')
-		.then((response) => {
-			return response.json();
-		})
-		.then((data) => {
-			recipes = Object.freeze(data);
 		});
 }
 
@@ -45,7 +34,7 @@ function url_to_image(url){
 }
 
 function load_data(){
-	return Promise.all([get_recipes(), get_goods().then(get_images)]);
+	return Promise.all([get_goods().then(get_images)]);
 }
 
-export {load_data, recipes, images, goods}
+export {load_data, images, goods}

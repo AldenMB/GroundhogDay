@@ -243,36 +243,40 @@ class GameWindow {
 		
         //draw any items we are moving
 		ctx.translate(this.tile_width/3,0); //controls position of goods on hog
-        if (fraction <= 1 && hog.previous_holding) {
-			this.drawAt(images[hog.previous_holding], col, row,ITEM_SPRITE_DATA);
-        }
-        if (2 > fraction && fraction > 1 && hog.holding && !hog.gave_to && !hog.took_from) {
-			this.drawAt(images[hog.holding], col, row,ITEM_SPRITE_DATA);
-        }
-        if (2 > fraction && fraction > 1 && hog.gave_to) {
-            let from = {x:0,y:0};
-            let to = {
-                x: this.skew_x(hog.direction_of(hog.gave_to)),
-                y: this.skew_y(hog.direction_of(hog.gave_to))
-            }
-            let item_coords = this.hop_path(from, to, fraction - 1);
-			ctx.translate(item_coords.x,item_coords.y);
-			this.drawAt(images[hog.previous_holding], col, row,ITEM_SPRITE_DATA);
-        }
-        if (2 > fraction && fraction > 1 && hog.took_from) {
-            let to = {x:0,y:0};
-            let from = {
-                x: this.skew_x(hog.direction_of(hog.took_from)),
-                y: this.skew_y(hog.direction_of(hog.took_from))
-            }
-            let item_coords = this.hop_path(from, to, fraction - 1);
-			ctx.translate(item_coords.x,item_coords.y);
-			this.drawAt(images[hog.holding], col, row,ITEM_SPRITE_DATA);
-        }
-        if (fraction >= 2 && hog.holding) {
-			this.drawAt(images[hog.holding], col, row,ITEM_SPRITE_DATA);
-        }
-
+		
+		if(hog.previous_holding){
+			let {graphic, spriteData} = hog.previous_holding;
+			if(fraction <= 1){
+				this.drawAt(graphic, col, row, spriteData);
+			} else if (fraction<2 && fraction>1 && hog.gave_to) {
+				let from = {x:0,y:0};
+				let to = {
+					x: this.skew_x(hog.direction_of(hog.gave_to)),
+					y: this.skew_y(hog.direction_of(hog.gave_to))
+				}
+				let item_coords = this.hop_path(from, to, fraction - 1);
+				ctx.save();
+				ctx.translate(item_coords.x,item_coords.y);
+				this.drawAt(graphic, col, row, spriteData);
+				ctx.restore();
+			}
+		}
+		
+		if(hog.holding){
+			let {graphic, spriteData} = hog.holding;
+			if(fraction>=2 || (hog.holding === hog.previous_holding && fraction>1)){
+				this.drawAt(graphic, col, row,spriteData);
+			} else if (fraction<2 && fraction>1 && hog.took_from) {
+				let to = {x:0,y:0};
+				let from = {
+					x: this.skew_x(hog.direction_of(hog.took_from)),
+					y: this.skew_y(hog.direction_of(hog.took_from))
+				}
+				let item_coords = this.hop_path(from, to, fraction - 1);
+				ctx.translate(item_coords.x,item_coords.y);
+				this.drawAt(hog.holding.graphic, col, row, hog.holding.spriteData);
+			}
+		}
         ctx.restore();
     }
     draw_shop_inventory_at(x, y, fraction = 3) {

@@ -1,7 +1,7 @@
 import {mod} from './utilities.mjs';
 import {Hog} from './basic_classes.mjs';
-import {images} from './load_data.mjs';
-/*import {Good} from './goods.mjs';*/
+import {images, goods} from './load_data.mjs';
+import {Good} from './goods.mjs';
 
 
 function rotateMatrix(matrix) { //rotates a matrix counter-clockwise
@@ -15,93 +15,93 @@ function rotateMatrix(matrix) { //rotates a matrix counter-clockwise
     return output;
 }
 
-class InteractionQueue {
-    constructor() {
-        this.pairs = []; //[[hog,interactable],...]
+function interaction_queue_generator() {
+	let pairs = [];
+	function hogs_of(interactable) {
+        return (pairs
+			.filter(pair => pair[1] === interactable)
+			.map(pair => pair[0])
+		);
     }
-    hogs_of(interactable) {
-        let pair_list = this.pairs.filter(pair => pair[1] === interactable);
-        let list = [];
-        for (let pair of pair_list) {
-            list.push(pair[0]);
-        }
-        return list;
+    function add_pair(hog, interactable) {
+        pairs.push([hog, interactable]);
     }
-    add_pair(hog, interactable) {
-        this.pairs.push([hog, interactable]);
+    function remove_pair(hog, interactable) {
+        pairs.splice(pairs.indexOf([hog, interactable]), 1)
     }
-    remove_pair(hog, interactable) {
-        this.pairs.splice(this.pairs.indexOf([hog, interactable]), 1)
-    }
-    resolve() {
-        for (let pair of this.pairs) {
+    function resolve() {
+        for (let pair of pairs) {
             pair[1].interact_with(pair[0]);
         }
     }
+	return Object.freeze({hogs_of, add_pair, remove_pair, resolve});
 }
 
-class Matchmaker {
-    constructor(board) {
-        this.board = board;
-        for (let hog of this.board.hogs) {
-            hog.previous_holding = hog.holding;
-            hog.gave_to = false;
-            hog.took_from = false;
-            hog.reset_interact_preferences();
-        }
-        for (let tile of this.board.tiles) {
-            if (tile.interactable instanceof Giver) {
-                tile.interactable.previous_resource_count = tile.interactable.resource_count;
-            }
-            if (tile.interactable instanceof Taker) {
-                tile.interactable.previous_holding = tile.interactable.holding.slice();
-            }
-        }
-    }
-    consult_next(hogs, type, queue) { // don't call me when hogs.length = 0
-        let hog = hogs.shift();
-        if (hog.interact_preferences.length === 0) return;
-        let target = hog.interact_preferences.shift();
-        if (!(target instanceof type)) {
-            hogs.push(hog);
-            return;
-        }
-        let preferred = target.prefers(hog, queue);
-        if (!preferred) {
-            hogs.push(hog);
-        } else {
-            queue.add_pair(hog, target);
-            if (preferred instanceof Hog) {
-                hogs.push(preferred);
-                queue.remove_pair(preferred, target);
-            }
-        }
-        return;
-    }
-    match() {
-        let holderQueue = new InteractionQueue(),
-            seekerQueue = new InteractionQueue();
+//used only in match_interactions
+function consult_next(hogs, type, queue) {
+	let hog = hogs.shift();
+	if (hog.interact_preferences.length === 0) return; //this hog has no will to act
+	
+	let target = hog.interact_preferences.shift();
+	if (!(target instanceof type)) {//this hog's preference is of the wrong type for this stage
+		hogs.push(hog);//back of the line
+		return;
+	}
+	
+	//hog wants to interact with target. But is it reciprocal?
+	let competing_hogs = queue.hogs_of(target)
+	if(type===Taker){
+		//TODO: make this consistent with crystals.
+		competing_hogs = competing_hogs.filter(h => h.holding.name === hog.holding.name);
+	}
+	
+	//is there room for hog without booting another?
+	let good_key = hog.holding? hog.holding.name : '';
+	if(competing_hogs.length < target.max_interactions(good_key)) {
+		queue.add_pair(hog, target);
+		return;
+	}
+	
+	//no room! put hog on the queue, then boot the lowest ranked one.
+	queue.add_pair(hog, target);
+	competing_hogs.push(hog);
+	competing_hogs.sort(h => target.tile_preferences.indexOf(h.tile));
+	let disfavored_hog = competing_hogs.pop();
+	hogs.push(disfavored_hog);
+	queue.remove_pair(disfavored_hog, target);
+	return;
+}
 
-        let activeHogs = this.board.hogs.filter(hog => hog.hopped_from);
+function match_interactions(board) {
+	//preparation
+	for (let hog of board.hogs) {
+		hog.previous_holding = hog.holding;
+		hog.gave_to = false;
+		hog.took_from = false;
+		hog.reset_interact_preferences();
+	}
+	for (let interactable of board.interactables) {
+		interactable.previous_holding = interactable.holding.slice();
+	}
+	
+	let holderQueue = interaction_queue_generator(),
+		seekerQueue = interaction_queue_generator(),
+		activeHogs = board.hogs.filter(hog => hog.hopped_from),
+		holders = activeHogs.filter(hog => hog.holding);
+	
+	while (holders.length > 0) {
+		consult_next(holders, Taker, holderQueue);
+	}
+	holderQueue.resolve();
+	for (let hog of holders) {
+		hog.reset_interact_preferences();
+	}
 
-        let holders = activeHogs.filter(hog => hog.holding);
-        while (holders.length > 0) {
-            this.consult_next(holders, Taker, holderQueue);
-        }
-        holderQueue.resolve();
-
-        for (let hog of activeHogs) {
-            hog.reset_interact_preferences();
-        }
-
-        let seekers = activeHogs.filter(hog => !hog.holding);
-        while (seekers.length > 0) {
-            this.consult_next(seekers, Giver, seekerQueue);
-        }
-        seekerQueue.resolve();
-
-        return [holderQueue, seekerQueue];
-    }
+	let seekers = activeHogs.filter(hog => !hog.holding);
+	while (seekers.length > 0) {
+		consult_next(seekers, Giver, seekerQueue);
+	}
+	seekerQueue.resolve();
 }
 
 class Interactable { //this should only be created as a Giver or a Taker.
@@ -115,19 +115,11 @@ class Interactable { //this should only be created as a Giver or a Taker.
             this.tiles[0].west,
             this.tiles[0].north
         ];
+        this.holding = [];
+        this.previous_holding = [];
     }
     deconstruct() {
         this.tiles.forEach(tile => tile.interactable = false);
-    }
-    prefers(hog, queue) {
-        let my_hogs = queue.hogs_of(this).filter(f => f.holding === hog.holding);
-        if (my_hogs.length < this.max_interactions(hog.holding)) return true; //indicates that there was no competition
-        for (let competing_hog of my_hogs) {
-            if (this.tile_preferences.indexOf(hog.tile) < this.tile_preferences.indexOf(competing_hog.tile)) {
-                return competing_hog;
-            }
-        }
-        return false; //indicates that given hog is not preferred
     }
     spriteData() {
         return [];
@@ -137,8 +129,6 @@ class Interactable { //this should only be created as a Giver or a Taker.
 class Taker extends Interactable {
     constructor(tile) {
         super(tile);
-        this.holding = [];
-        this.previous_holding = [];
     }
     interact_with(hog) {
         this.take_from(hog);
@@ -164,26 +154,39 @@ class Giver extends Interactable { //make sure to define baseResourceCount and r
         super(tile);
         this.replenish();
     }
+	get baseResourceCount() {
+		alert('you must define a baseResourceCount for your giver!');
+		console.log(self);
+	}
+	get resourceType() {
+		alert('you must define a resourceType for your giver!');
+		console.log(self);
+	}
+	get graphic() {
+		alert('you must define a graphic for your giver!');
+		console.log(self);
+	}
     replenish() {
-        this.resource_count = this.baseResourceCount(); // new variables are defined here.
-        this.previous_resource_count = this.baseResourceCount();
+		this.holding = new Array(this.baseResourceCount)
+			.fill(0)
+			.map(elt => new Good(this.resourceType,[],0));
+		this.previous_holding = this.holding.slice();
     }
     interact_with(hog) {
         this.give_to(hog);
     }
     give_to(hog, tile) {
-        hog.holding = this.resourceType();
+        hog.holding = this.holding.pop();
         hog.took_from = this.tiles.find(tile => tile.hasHogAdjacent(hog));
-        this.resource_count--;
     }
     max_interactions(resource_type = false) {
-        return this.resource_count;
+        return this.holding.length;
     }
     currentGraphic() {
-        return this.graphic(this.resource_count);
+        return this.graphic(this.holding.length);
     }
     previousGraphic() {
-        return this.graphic(this.previous_resource_count);
+        return this.graphic(this.previous_holding.length);
     }
 }
 
@@ -231,10 +234,10 @@ class Castle extends Taker {
 }
 
 class Berry_Bush extends Giver {
-    resourceType() {
+    get resourceType() {
         return 'food';
     }
-    baseResourceCount() {
+    get baseResourceCount() {
         return 2;
     }
     graphic(count) {
@@ -250,10 +253,10 @@ class Berry_Bush extends Giver {
 }
 
 class Tree extends Giver {
-    resourceType() {
-        return "wood";
+    get resourceType() {
+        return 'wood';
     }
-    baseResourceCount() {
+    get baseResourceCount() {
         return 1;
     }
     graphic(count) {
@@ -267,8 +270,8 @@ class Tree extends Giver {
 }
 
 class Shop {
-    constructor(tile, recipe) {
-        this.recipe = recipe; // {input : [ [ingredient, amount], ...], output : [product, amount]}
+    constructor(tile, target_good) {
+        this.target_good = target_good;
         this.corner = tile;
         this.rotation = "SW"; //in which corner is the output?
         this.tiles = this.corner.neighborsFromMatrix(
@@ -320,14 +323,19 @@ class Shop {
         return [x, y, width, height];
     }
     recipeRequires(ingredient_name) {
-        return this.recipe.input.find(pair => pair[0] === ingredient_name);
+        return goods[this.target_good].recipe.find(pair => pair[0] === ingredient_name);
     }
     craft() {
-        for (let part of this.recipe.input) {
+        for (let part of goods[this.target_good].recipe) {
             if (part[1] > this.input.numberHeld(part[0])) return;
         }
-        this.input.craft();
-        this.output.craft();
+		let product = new Good(
+			this.target_good,
+			this.input.holding.map(good => good.value_array), 
+			0
+		);
+        this.input.holding = [];
+        this.output.holding = [product];
     }
     deconstruct() {
         for (let tile of this.tiles) {
@@ -356,7 +364,7 @@ class ShopInput extends Taker {
     }
     pic_list(previous = false) { //[[resource_name,is_present],...]
         let array = [];
-        for (let pair of this.shop.recipe.input) {
+        for (let pair of goods[this.shop.target_good].recipe) {
             let fulfilled = this.numberHeld(pair[0], previous);
             let unfulfilled = pair[1] - fulfilled;
             for (let i = 0; i < fulfilled; ++i) {
@@ -420,17 +428,7 @@ class ShopInput extends Taker {
         if (previous) {
 			holdlist = this.previous_holding;
 		}
-        return holdlist.filter(ing => ing === resource_type).length;
-    }
-    craft() {
-        for (let part of this.shop.recipe.input) {
-            for (let i = 0; i < part[1]; ++i) {
-                this.removeHeld(part[0]);
-            }
-        }
-    }
-    removeHeld(resource_name) {
-        this.holding.splice(this.holding.findIndex(e => e === resource_name), 1);
+        return holdlist.filter(ing => ing.name === resource_type).length;
     }
     deconstruct() {
         this.shop.deconstruct()
@@ -444,17 +442,8 @@ class ShopOutput extends Giver {
         this.tiles.forEach(tile => tile.interactable = this);
     }
     pic_list(previous = false) { //[[resource_name,is_present],...]
-        let array = [],
-            pair = this.shop.recipe.output,
-            count = this.resource_count;
-        if (previous) count = this.previous_resource_count;
-        for (let i = 0; i < count; ++i) {
-            array.push([pair[0], true]);
-        }
-        for (let i = 0; i < this.shop.recipe.output[1] - count; ++i) {
-            array.push([pair[0], false]);
-        }
-        return array;
+        let held = previous? this.previous_holding : this.holding;
+		return [[this.shop.target_good, held.length>0]]
     }
     get tiles() {
         if (this.shop === undefined) return [{
@@ -497,18 +486,15 @@ class ShopOutput extends Giver {
     rotate() {
         this.shop.rotate()
     };
-    baseResourceCount() {
+    get baseResourceCount() {
         return 0
     };
-    resourceType() {
-        return this.shop.recipe.output[0];
-    }
-    craft() {
-        this.resource_count = this.shop.recipe.output[1];
+    get resourceType() {
+        return this.shop.target_good;
     }
     deconstruct() {
         this.shop.deconstruct()
     };
 }
 
-export {Matchmaker, Castle, Berry_Bush, Tree, Shop, ShopInput, ShopOutput, Giver};
+export {match_interactions, Castle, Berry_Bush, Tree, Shop, ShopInput, ShopOutput, Giver};
