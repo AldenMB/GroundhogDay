@@ -1,6 +1,6 @@
 # GroundhogDay
 
-##To Do:
+## To Do:
 
 * find/create better graphics
 * implement remaining resources
