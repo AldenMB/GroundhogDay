@@ -89,7 +89,7 @@ class Tile {
                 this.interact_toggle(Berry_Bush);
                 break;
             case "shop_toggle":
-                this.shop_toggle(document.getElementById("recipe_select").elements.recipe_radio.value);
+                this.shop_toggle(document.getElementById("recipe").value);
                 break;
             case "shop_rotate":
                 if (this.interactable instanceof ShopInput || this.interactable instanceof ShopOutput) this.interactable.shop.rotate();

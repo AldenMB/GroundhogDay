@@ -2,7 +2,7 @@
 
 import {Board} from './modules/basic_classes.mjs';
 import {Castle, Berry_Bush, Tree} from './modules/hog_interactions.mjs';
-import {load_data} from './modules/load_data.mjs';
+import {load_data, goods} from './modules/load_data.mjs';
 
 const DAY_DURATION_MILLIS = 60000;
 const STEPS_PER_DAY = 45;
@@ -16,6 +16,13 @@ load_data().then(function(){
 			b.gameWindow.tile_size = this.value;
 		}
 		b.gameWindow.tile_size=zoomslider.value;
+		let recipeselect = document.getElementById("recipe");
+		for(let recipe of Object.keys(goods)){
+			let option = document.createElement("option");
+			option.value = recipe;
+			option.text = goods[recipe].display_name;
+			recipeselect.add(option);
+		}
 
 		b.tileAt(-2, 1).interact_toggle(Castle);
 		b.tileAt(2, 2).shop_toggle("perfume");
