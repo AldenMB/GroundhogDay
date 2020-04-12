@@ -17,3 +17,4 @@
 	* html panels?
 	* an svg drawing over the game board?
 	* both?
+* listen for touch events to pan/zoom
