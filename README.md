@@ -19,3 +19,5 @@
 	* both?
 * listen for touch events to pan/zoom
 * serialize maps
+* reimplement logic with Pyodide?
+	* probably still do graphics in stright javascript.
